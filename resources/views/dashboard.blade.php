@@ -43,28 +43,28 @@
         <div id="produkCarousel" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="d-block w-100 img-fluid" src="https://via.placeholder.com/800x400?text=Produk+1" alt="Produk 1" style="max-height: 450px; object-fit: cover;">
+                    <img class="d-block w-100 img-fluid" src="https://tirtorahayu-kulonprogo.desa.id/desa/upload/artikel/sedang_1633915522_DESA%20CERDAS.jpg" alt="Produk 1" style="max-height: 450px; object-fit: cover;">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>Produk 1</h5>
                         <p>Deskripsi singkat produk 1.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100 img-fluid" src="https://via.placeholder.com/800x400?text=Produk+2" alt="Produk 2" style="max-height: 450px; object-fit: cover;">
+                    <img class="d-block w-100 img-fluid" src="https://statik.unesa.ac.id/profileunesa_konten_statik/uploads/pusdippket/thumbnail/a6bf8cce-e619-46de-9715-d3b2b90e6512.jpg" alt="Produk 2" style="max-height: 450px; object-fit: cover;">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>Produk 2</h5>
                         <p>Deskripsi singkat produk 2.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100 img-fluid" src="https://via.placeholder.com/800x400?text=Produk+3" alt="Produk 3" style="max-height: 450px; object-fit: cover;">
+                    <img class="d-block w-100 img-fluid" src="https://kecsamalanga.bireuenkab.go.id/media/2022.08/43-potensi-desa1.jpg" alt="Produk 3" style="max-height: 450px; object-fit: cover;">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>Produk 3</h5>
                         <p>Deskripsi singkat produk 3.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100 img-fluid" src="https://via.placeholder.com/800x400?text=Produk+4" alt="Produk 4" style="max-height: 450px; object-fit: cover;">
+                    <img class="d-block w-100 img-fluid" src="https://kecsamalanga.bireuenkab.go.id/media/2022.08/43-potensi-desa1.jpg" alt="Produk 4" style="max-height: 450px; object-fit: cover;">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>Produk 4</h5>
                         <p>Deskripsi singkat produk 4.</p>
@@ -85,7 +85,7 @@
         <div class="row align-items-center">
             <!-- Foto Kepala Desa -->
             <div class="col-md-6 d-flex justify-content-center">
-                <img src="https://via.placeholder.com/300" alt="Kepala Desa" class="img-fluid">
+                <img src="https://tanjungsari-ciamis.desa.id/wp-content/uploads/kades1x1m.png" alt="Kepala Desa" class="img-fluid">
             </div>
             <!-- Konten About Us -->
             <div class="col-md-6 text-content text-justify">
@@ -116,7 +116,7 @@
                 <p>Selamat datang di halaman tentang kami. Nama Kepala Desa adalah Sugeng S.pd,. M.kom, yang memimpin desa kami dengan dedikasi dan komitmen. Kami berkomitmen untuk meningkatkan kesejahteraan masyarakat dan mengembangkan desa kami dengan berbagai inisiatif dan program. Di halaman ini, Anda akan menemukan informasi lebih lanjut tentang visi, misi, dan pencapaian desa kami.</p>
             </div>
             <div class="col-md-6 d-flex justify-content-center">
-                <img src="https://via.placeholder.com/300" alt="Kepala Desa" class="img-fluid">
+                <img src="https://asset-a.grid.id//crop/0x0:0x0/700x465/photo/2021/08/05/kondisi-geografis-pulau-pulau-di-20210805121131.jpg" alt="Kepala Desa" class="img-fluid">
             </div>
         </div>
     </div>
@@ -127,7 +127,7 @@
                 <p>Selamat datang di halaman tentang kami. Nama Kepala Desa adalah Sugeng S.pd,. M.kom, yang memimpin desa kami dengan dedikasi dan komitmen. Kami berkomitmen untuk meningkatkan kesejahteraan masyarakat dan mengembangkan desa kami dengan berbagai inisiatif dan program. Di halaman ini, Anda akan menemukan informasi lebih lanjut tentang visi, misi, dan pencapaian desa kami.</p>
             </div>
             <div class="col-md-6 d-flex justify-content-center">
-                <img src="https://via.placeholder.com/300" alt="Kepala Desa" class="img-fluid">
+                <img src="https://annurngrukem.com/wp-content/uploads/2019/12/Demografi-1024x1024.jpg" alt="Kepala Desa" class="img-fluid">
             </div>
         </div>
     </div>
