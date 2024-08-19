@@ -8,75 +8,86 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-light">
-        <a class="navbar-brand" href="#">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/1200px-Kab_Bandung_Barat.svg.png" width="30" height="30" class="d-inline-block align-top" alt="Logo Desa">
-            <span class="text-dark">Desa Kartawangi</span>
-        </a>
-        <button class="navbar-toggler" style="background-color: rgb(168, 168, 168)" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="about.php">Tentang Kami</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="sejarah.php">Sejarah</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Pemerintahan
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="struktur.php">Struktur Desa</a>
-                        <a class="dropdown-item" href="galery.php">Galeri kegiatan</a>
-                        <a class="dropdown-item" href="potensi.php">Potensi Desa</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    @include('navbar')
     <div class="container mt-4">
         <h1 class="text-center mb-4">Galeri Kegiatan Desa Kartawangi</h1>
         <p>Selamat datang di galeri kami! Di sini, Anda dapat melihat berbagai kegiatan dan acara yang telah berlangsung di Desa Kartawangi. Kami berharap galeri ini dapat memberikan gambaran yang lebih jelas tentang kehidupan dan budaya desa kami. Selamat menikmati!</p>
         <div class="row">
             <!-- Foto 1 -->
-            <div class="col-12 col-md-6 col-lg-3 mb-2 d-flex justify-content-center">
-                <div class="photo">
-                    <img src="https://via.placeholder.com/300" alt="Foto 1" class="img-fluid">
+            <div class="col-12 col-md-6 col-lg-3 mb-2">
+                <div class="d-flex" style="height: 210px;width: 100%">
+                    <img 
+                        src="https://bintangsekolahindonesia.com/wp-content/uploads/2023/05/WhatsApp-Image-2023-05-11-at-15.51.57.jpeg" 
+                        alt="Foto 1" 
+                        class="img-fluid" 
+                        style="object-fit: cover; cursor: pointer;" 
+                        data-toggle="modal" 
+                        data-target="#imageModal"
+                    >    
+                </div>
+                <div class="caption">
+                    <span>Pemasangan Bendera Merah putih</span>
                 </div>
             </div>
             <!-- Foto 2 -->
-            <div class="col-12 col-md-6 col-lg-3 mb-2 d-flex justify-content-center">
-                <div class="photo">
-                    <img src="https://via.placeholder.com/300" alt="Foto 2" class="img-fluid">
+            <div class="col-12 col-md-6 col-lg-3 mb-2">
+                <div class="d-flex" style="height: 210px;width: 100%">
+                    <img 
+                        src="https://bintangsekolahindonesia.com/wp-content/uploads/2023/05/WhatsApp-Image-2023-05-11-at-15.51.57.jpeg" 
+                        alt="Foto 1" 
+                        class="img-fluid" 
+                        style="object-fit: cover; cursor: pointer;" 
+                        data-toggle="modal" 
+                        data-target="#imageModal"
+                    >    
+                </div>
+                <div class="caption">
+                    <span>Pemasangan Bendera Merah putih</span>
                 </div>
             </div>
             <!-- Video 1 -->
-            <div class="col-12 col-md-6 col-lg-3 mb-2 d-flex flex-column align-items-center">
-                <iframe width="560" height="315" style="height: auto; width:100%;" 
-                    src="https://www.youtube.com/embed/fip4ETMVd_I?si=97guyzrzRe2euNyS" 
-                    title="YouTube video player" frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen="">
-                </iframe>
-                <div class="caption">
-                    <h3>jaloooo</h3>
-                </div>
-            </div>
-            <!-- Video 2 -->
-            <div class="col-12 col-md-6 col-lg-3 mb-2 d-flex justify-content-center">
-                <div class="d-flex">
+            <div class="col-12 col-md-6 col-lg-3 mb-2 flex-column align-items-center">
+                <div class="d-flex" style="height: 210px">
                     <iframe width="560" height="315" style="height: auto; width:100%;" 
-                        src="https://www.youtube.com/embed/1kISBp8YFac" 
+                        src="https://www.youtube.com/embed/fip4ETMVd_I?si=97guyzrzRe2euNyS" 
                         title="YouTube video player" frameborder="0" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                         allowfullscreen="">
                     </iframe>
                 </div>
+                <div class="caption">
+                    <span>Upacara Bendera Di Desa Kartawangi</span>
+                </div>
+            </div>
+            <!-- Video 2 -->
+            <div class="col-12 col-md-6 col-lg-3 mb-2 flex-column align-items-center">
+                <div class="d-flex" style="height: 210px">
+                    <iframe width="560" height="315" style="height: auto; width:100%;" 
+                        src="https://www.youtube.com/embed/t69CrzPklkc?si=MqnMljWsGTeOp8L6" 
+                        title="YouTube video player" frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen="">
+                    </iframe>
+                </div>
+                <div class="caption">
+                    <span>Pidato Proklamasi dari Ir.Soekarno</span>
+                </div>
             </div>
             <!-- Tambahkan lebih banyak foto dan video sesuai kebutuhan -->
+        </div>
+        {{-- modal  --}}
+        <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <img 
+                            src="https://bintangsekolahindonesia.com/wp-content/uploads/2023/05/WhatsApp-Image-2023-05-11-at-15.51.57.jpeg" 
+                            alt="Foto 1" 
+                            class="img-fluid"
+                        >
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <footer class="bg-light text-center py-3">

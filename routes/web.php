@@ -15,7 +15,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('dashboard');
-});
+})->name("home");
 Route::get('/galeri', function () {
     return view('galery');
-});
+})->name("galery");
+Route::get('/struktur', function () {
+    return view('struktur');
+})->name("struktur");
+
