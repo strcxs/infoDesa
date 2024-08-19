@@ -37,47 +37,17 @@
             </ul>
         </div>
     </nav>
-    <div class="container mt-4">
-        <h1 class="text-center mb-4">Galeri Kegiatan Desa Kartawangi</h1>
-        <p>Selamat datang di galeri kami! Di sini, Anda dapat melihat berbagai kegiatan dan acara yang telah berlangsung di Desa Kartawangi. Kami berharap galeri ini dapat memberikan gambaran yang lebih jelas tentang kehidupan dan budaya desa kami. Selamat menikmati!</p>
-        <div class="row">
-            <!-- Foto 1 -->
-            <div class="col-12 col-md-6 col-lg-3 mb-2 d-flex justify-content-center">
-                <div class="photo">
-                    <img src="https://via.placeholder.com/300" alt="Foto 1" class="img-fluid">
-                </div>
-            </div>
-            <!-- Foto 2 -->
-            <div class="col-12 col-md-6 col-lg-3 mb-2 d-flex justify-content-center">
-                <div class="photo">
-                    <img src="https://via.placeholder.com/300" alt="Foto 2" class="img-fluid">
-                </div>
-            </div>
-            <!-- Video 1 -->
-            <div class="col-12 col-md-6 col-lg-3 mb-2 d-flex flex-column align-items-center">
-                <iframe width="560" height="315" style="height: auto; width:100%;" 
-                    src="https://www.youtube.com/embed/fip4ETMVd_I?si=97guyzrzRe2euNyS" 
-                    title="YouTube video player" frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen="">
-                </iframe>
-                <div class="caption">
-                    <h3>jaloooo</h3>
-                </div>
-            </div>
-            <!-- Video 2 -->
-            <div class="col-12 col-md-6 col-lg-3 mb-2 d-flex justify-content-center">
-                <div class="d-flex">
-                    <iframe width="560" height="315" style="height: auto; width:100%;" 
-                        src="https://www.youtube.com/embed/1kISBp8YFac" 
-                        title="YouTube video player" frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen="">
-                    </iframe>
-                </div>
-            </div>
-            <!-- Tambahkan lebih banyak foto dan video sesuai kebutuhan -->
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Struktur Organisasi Desa Kartawangi</h2>
+        
+        <p class="text-center mb-4">Struktur organisasi desa Kartawangi menggambarkan susunan dan pembagian tugas dari anggota-anggota pemerintahan desa. Diagram ini menunjukkan berbagai posisi dan tanggung jawab dalam organisasi, mulai dari kepala desa hingga staf administrasi. Ini penting untuk memahami bagaimana desa dikelola dan bagaimana berbagai fungsi administratif dan pemerintahan saling berinteraksi.</p>
+
+        <!-- Gambar Struktur Organisasi -->
+        <div class="text-center">
+            <img src="https://cdn1-production-images-kly.akamaized.net/S_KFAlyIvQu4Z2AVeW2F1Bas_64=/1200x675/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/4582092/original/067752200_1695191086-Biru_Putih_Profesional_Struktur_Organisasi_Diagram__1_.jpg" alt="Struktur Organisasi" class="img-fluid mb-4">
         </div>
+        
+        <p class="text-center">Gambar di atas adalah diagram struktur organisasi kami yang memperlihatkan hierarki dan hubungan antar posisi dalam pemerintahan desa. Setiap bagian memiliki peran dan tanggung jawab khusus untuk memastikan kelancaran administrasi dan pelayanan kepada masyarakat.</p>
     </div>
     <footer class="bg-light text-center py-3">
         <p>&copy; 2024 Nurtanio University KKN Kartawangi. All rights reserved.</p>
