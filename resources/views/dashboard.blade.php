@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desa Kartawangi</title>
+    <title>Desa Kertawangi</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/1200px-Kab_Bandung_Barat.svg.png"/>
+    <style>
+        #more {display: none;}
+    </style>
 </head>
 <body>
     <!-- Navbar -->
@@ -69,9 +73,9 @@
     <div class="container mt-3">
         {{-- <h2 style="text-align: center">Visi Misi Desa</h2> --}}
         <div>
-            <span><b>Apa visi Desa Kartawangi?</b></span>
+            <span><b>Apa visi Desa Kertawangi?</b></span>
             <p id="visi"></p>
-            <span><b>Berikut adalah Misi Dari Desa Kartawangi :</b></span>
+            <span><b>Berikut adalah Misi Dari Desa Kertawangi :</b></span>
             <div id="misiList">
 
             </div>
@@ -101,26 +105,25 @@
     </div>
     <div class="container mt-5 text-justify">
         <div class="history-container">
-            <h2 class="history-title">Sejarah Desa Kartawangi</h2>
+            <h2 class="history-title">Sejarah Desa Kertawangi</h2>
             <div class="history-content">
-                <p id="sejarah"></p>
-                {{-- <p>Desa Kartawangi terletak di Kabupaten Bandung Barat, Provinsi Jawa Barat, Indonesia. Desa ini memiliki sejarah yang panjang dan kaya yang mencerminkan perkembangan dan perubahan yang terjadi di kawasan tersebut sepanjang waktu.</p>
-                <p>Asal usul nama Kartawangi berasal dari bahasa Sunda, di mana "Karta" berarti makmur atau sejahtera dan "Wangi" berarti harum. Nama ini mencerminkan harapan dan doa masyarakat desa agar desa ini selalu makmur dan harum dalam arti yang luas, baik dalam konteks kesejahteraan sosial maupun lingkungan.</p>
-                <p>Pada masa lalu, Desa Kartawangi merupakan daerah pertanian yang subur dengan berbagai tanaman pangan yang ditanam oleh masyarakat setempat. Seiring berjalannya waktu, desa ini mengalami berbagai perubahan dalam struktur sosial dan ekonomi, terutama dengan adanya modernisasi dan perkembangan infrastruktur.</p>
-                <p>Saat ini, Desa Kartawangi terus berkembang dengan adanya berbagai program pembangunan yang bertujuan untuk meningkatkan kualitas hidup warganya. Masyarakat desa tetap menjaga tradisi dan budaya lokal sambil beradaptasi dengan perubahan zaman, menjadikan Desa Kartawangi sebagai contoh harmonisasi antara tradisi dan modernitas.</p> --}}
+                <span id="sejarah"></span>
+                <span id="dots">...</span>
+                <span id="more"></span>
+                <span id="readMore" onclick="toggleReadMore()" class="text text-primary">Tampilkan lebih banyak</span>
             </div>
         </div>
     </div>
     <div class="container mt-2">
         <div class="maps">
             <div style="width: 100%">
-                <iframe width="100%vh" height="300px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Kartawangi+(Desa%20Kartawangi)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="https://www.gps.ie/">gps systems</a></iframe>
+                <iframe width="100%vh" height="300px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Kertawangi+(Desa%20Kertawangi)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="https://www.gps.ie/">gps systems</a></iframe>
             </div>
         </div>
     </div>
     <!-- Footer -->
     <footer class="bg-light text-center py-3">
-        <p>&copy; 2024 Nurtanio University KKN Kartawangi. All rights reserved.</p>
+        <p>&copy; 2024 Nurtanio University KKN Kertawangi. All rights reserved.</p>
     </footer>
 
     <!-- Link ke Bootstrap JS dan dependencies -->
@@ -130,6 +133,35 @@
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        function toggleReadMore() {
+            var dots = document.getElementById("dots");
+            var moreText = document.getElementById("more");
+            var btnText = document.querySelector("button");
+            var moreButton = document.getElementById("readMore");
+
+            if (dots.style.display === "none") {
+                dots.style.display = "inline";
+                btnText.textContent = "Read more";
+                moreText.style.display = "none";
+                moreButton.innerText = "Tampilkan lebih banyak"
+            } else {
+                dots.style.display = "none";
+                moreButton.innerText = "Tampilkan lebih sedikit"
+                btnText.textContent = "Read less";
+                moreText.style.display = "inline";
+            }
+        }
+        function maxSplit(text,max){
+            var fullText = text;
+            var words = fullText.split(' ');
+            
+            return words.slice(max).join(' ');
+        }
+        function minSplit(text,max){
+            var fullText = text;
+            var words = fullText.split(' ');
+            return words.slice(0, max).join(' ');
+        }
         $(document).ready(function(){
             $.ajax({
                 url: "/api/dashboard/",
@@ -140,7 +172,9 @@
                     $("#visi").text(response.visi);
                     $("#geografis").text(response.geografis);
                     $("#demografis").text(response.demografis);
-                    $("#sejarah").text(response.sejarah);
+
+                    $("#sejarah").text(minSplit(response.sejarah,50));
+                    $("#more").text(maxSplit(response.sejarah,50));
                     
                     var misi = response.misi;
                     const points = misi.split('. ').filter(point => point.trim() !== '');

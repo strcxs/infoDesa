@@ -12,6 +12,16 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/admin', function () {
+    return view('admin/admin');
+})->name("admin");
+Route::get('/admin/Galery', function () {
+    return view('admin/adminGalery');
+})->name("adminGalery");
+Route::get('/admin/struktur', function () {
+    return view('admin/adminStruktur');
+})->name("adminStruktur");
+
 
 Route::get('/', function () {
     return view('dashboard');
@@ -23,10 +33,5 @@ Route::get('/struktur', function () {
     return view('struktur');
 })->name("struktur");
 
-Route::get('/admin', function () {
-    return view('admin');
-})->name("admin");
-Route::get('/admin/Galery', function () {
-    return view('adminGalery');
-})->name("adminGalery");
+
 

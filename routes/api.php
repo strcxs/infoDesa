@@ -21,6 +21,10 @@ use Illuminate\Support\Facades\Route;
 Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::apiResources([
         '/dashboard' => 'dashboardController',
+        '/galeri' => 'galeriController',
+        '/struktur' => 'strukturController',
     ]);
     Route::post('/dashboard/{id}', 'dashboardController@update');
+    Route::post('/galeri/{id}', 'galeriController@update');
+    Route::post('/struktur/{id}', 'strukturController@update');
 });

@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman Admin</title>
+    <title>Admin Desa</title>
     <!-- Bootstrap CSS -->
+
+    <link rel="shortcut icon" type="image/icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/1200px-Kab_Bandung_Barat.svg.png"/>
     
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -47,34 +49,7 @@
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar">
-                <button class="btn btn-light d-md-none" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-expanded="false" aria-controls="sidebarCollapse">
-                    <i class="bi bi-list"></i> Menu
-                </button>
-                <div class="collapse d-md-block" id="sidebarCollapse">
-                    <h4 class="text-white">Admin Dashboard</h4>
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="{{ route('admin') }}">
-                                <i class="fas fa-house"></i>
-                                Dashboard
-                            </a>
-                        </li>
-                        {{-- <li class="nav-item">
-                            <a class="nav-link text-white" href="#">
-                                <i class="fas fa-sitemap"></i>
-                                Struktur
-                            </a>
-                        </li> --}}
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="{{ route('adminGalery') }}">
-                                <i class="fab fa-envira"></i>
-                                Galery
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            @include('admin/navbarAdmin')
 
             <!-- Content -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-4 content">
@@ -106,7 +81,7 @@
                             <textarea class="form-control" id="sejarah"></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="fileUpload" class="form-label"><strong>Upload File</strong></label>
+                            <label for="fileUpload" class="form-label"><strong>Foto Kepala Desa</strong></label>
                             <input type="file" class="form-control" id="fileUpload">
                         </div>
                         <button id="edit" type="button" class="btn btn-warning">Edit</button>
