@@ -23,3 +23,10 @@ Route::get('/struktur', function () {
     return view('struktur');
 })->name("struktur");
 
+Route::get('/admin', function () {
+    return view('admin');
+})->name("admin");
+Route::get('/admin/Galery', function () {
+    return view('adminGalery');
+})->name("adminGalery");
+
