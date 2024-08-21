@@ -14,6 +14,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::group(['namespace' => 'App\Http\Controllers'], function () {
+    Route::apiResources([
+        '/dashboard' => 'dashboardController',
+        '/galeri' => 'galeriController',
+        '/struktur' => 'strukturController',
+        '/banner' => 'bannerController',
+        '/produk' => 'controllerProduk',
+        '/produkImg' => 'imgController',
+        '/geografis' => 'geoController',
+        '/anggaran' => 'anggaranController',
+    ]);
+    Route::post('/dashboard/{id}', 'dashboardController@update');
+    Route::post('/galeri/{id}', 'galeriController@update');
+    Route::post('/struktur/{id}', 'strukturController@update');
+    Route::post('/banner/{id}', 'bannerController@update');
+    Route::post('/produkImg/{id}', 'imgController@update');
 });
