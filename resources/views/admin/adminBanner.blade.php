@@ -54,20 +54,29 @@
 
             <!-- Content -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-4 content">
-                <h2>Pengaturan Struktur</h2>
+                <h2>Pengaturan Banner</h2>
                 <div class="mt-4">
                     <form id="uploadForm" class="mb-3">
                         <div id="imageUpload">
                             <div class="mb-3">
-                                <label for="imageFile" class="form-label">Upload Gambar Struktur </label>
+                                <label for="imageFile" class="form-label">Upload Gambar Banner </label>
                                 <input type="file" class="form-control" id="fileUpload">
                             </div>
                         </div>
-                        <button id="add" type="button" class="btn btn-primary">Ubah</button>
+                        <button id="add" type="button" class="btn btn-primary">Tambah</button>
                     </form>
-                    <h4>Gambar Struktur saat ini</h4>
-                    <img id="struktur-img" style="max-width: 100%" src="" alt="">
                 </div>
+                <table id="tabel" class="display">
+                    <thead>
+                        <tr>
+                            <th>Gambar</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataTabel">
+                        <!-- More rows as needed -->
+                    </tbody>
+                </table>
             </main>
         </div>
     </div>
@@ -80,13 +89,15 @@
 
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script>
-        $.ajax({
-                url: "/api/struktur/",
-                method: "GET", // First change type to method here
+        function Delete(id){
+            $.ajax({
+                url: "/api/banner/"+id,
+                method: "DELETE", // First change type to method here
                 success: function(response) {
-                    $('#struktur-img').attr('src', `{{asset('storage/images/struktur/${response.image}')}}`);
+                    window.location.reload();
                 }
             });
+        }
         $(document).ready(function(){
             $("#add").click(function(event){ 
                 var file = $('#fileUpload').prop('files')[0];
@@ -94,7 +105,7 @@
                 images.append('image', file);
 
                 $.ajax({
-                    url: "/api/struktur/1",
+                    url: "/api/banner/",
                     method: "POST",
                     processData: false,
                     contentType: false,
@@ -103,6 +114,29 @@
                         window.location.reload();
                     }
                 });
+            });
+
+            $.ajax({
+                url: "/api/banner/",
+                method: "GET", // First change type to method here
+                success: function(response) {
+                    response.forEach(data => {
+                        img = "{{asset('storage/images/banner/')}}" + '/' + data.banner_img;
+                        $('#dataTabel').append(
+                            "<tr>"+
+                            "   <td><a href=\""+img+"\">Image Link</a></td>" +
+                            "    <td class=\"action-buttons\">"+
+                            "        <button class='btn btn-danger' id=\"delete-"+data.id+"\">Delete</button>"+
+                            "    </td>"+
+                            "</tr>"
+                        );
+
+                        $("#delete-"+data.id+"").click(function(event){
+                            Delete(data.id);
+                        });
+                    });
+                    $('#tabel').DataTable();
+                }
             });
         });
     </script>

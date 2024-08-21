@@ -35,7 +35,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="#">
+                <a class="nav-link text-white {{ request()->routeIs('adminBanner') ? 'active' : '' }}" href="{{ route('adminBanner') }}">
                     <i class="fas fa-image"></i>
                     Banner
                 </a>

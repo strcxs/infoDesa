@@ -21,6 +21,9 @@ Route::get('/admin/Galery', function () {
 Route::get('/admin/struktur', function () {
     return view('admin/adminStruktur');
 })->name("adminStruktur");
+Route::get('/admin/banner', function () {
+    return view('admin/adminBanner');
+})->name("adminBanner");
 
 
 Route::get('/', function () {

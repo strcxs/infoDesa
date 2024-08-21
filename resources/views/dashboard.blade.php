@@ -16,35 +16,7 @@
     @include('navbar')
     <div class="container-fluid">
         <div id="produkCarousel" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="d-block w-100 img-fluid" src="https://tirtorahayu-kulonprogo.desa.id/desa/upload/artikel/sedang_1633915522_DESA%20CERDAS.jpg" alt="Produk 1" style="max-height: 450px; object-fit: cover;">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Produk 1</h5>
-                        <p>Deskripsi singkat produk 1.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100 img-fluid" src="https://statik.unesa.ac.id/profileunesa_konten_statik/uploads/pusdippket/thumbnail/a6bf8cce-e619-46de-9715-d3b2b90e6512.jpg" alt="Produk 2" style="max-height: 450px; object-fit: cover;">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Produk 2</h5>
-                        <p>Deskripsi singkat produk 2.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100 img-fluid" src="https://kecsamalanga.bireuenkab.go.id/media/2022.08/43-potensi-desa1.jpg" alt="Produk 3" style="max-height: 450px; object-fit: cover;">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Produk 3</h5>
-                        <p>Deskripsi singkat produk 3.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100 img-fluid" src="https://kecsamalanga.bireuenkab.go.id/media/2022.08/43-potensi-desa1.jpg" alt="Produk 4" style="max-height: 450px; object-fit: cover;">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Produk 4</h5>
-                        <p>Deskripsi singkat produk 4.</p>
-                    </div>
-                </div>
+            <div id="banner" class="carousel-inner">
             </div>
             <a class="carousel-control-prev" href="#produkCarousel" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -163,6 +135,31 @@
             return words.slice(0, max).join(' ');
         }
         $(document).ready(function(){
+            $.ajax({
+                url: "/api/banner/",
+                method: "GET", // First change type to method here
+                success: function(response) {
+                    response.forEach((data,index) => {
+                        if (index == 0) {
+                            $('#banner').append(
+                                '<div class="carousel-item active">' +
+                                '    <img class="d-block w-100 img-fluid" src="'+`{{asset('storage/images/banner/${data.banner_img}')}}`+'" alt="Produk 1" style="max-height: 450px; object-fit: cover;">' +
+                                '    <div class="carousel-caption d-none d-md-block">' +
+                                '    </div>' +
+                                '</div>'
+                            )
+                        }else{
+                            $('#banner').append(
+                                '<div class="carousel-item">' +
+                                '    <img class="d-block w-100 img-fluid" src="'+`{{asset('storage/images/banner/${data.banner_img}')}}`+'" alt="Produk 1" style="max-height: 450px; object-fit: cover;">' +
+                                '    <div class="carousel-caption d-none d-md-block">' +
+                                '    </div>' +
+                                '</div>'
+                            )
+                        }
+                    });
+                }
+            });
             $.ajax({
                 url: "/api/dashboard/",
                 method: "GET", // First change type to method here
