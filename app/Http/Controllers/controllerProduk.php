@@ -23,12 +23,24 @@ class controllerProduk extends Controller
     public function destroy($id){
         $data = Produk::find($id);
 
-        if ($data->image != null) {
-            Storage::delete('public/images/produk/'.$data->produk_img);
+        foreach ($data->data_image as $value) {
+            Storage::delete('public/images/produk/'.$value->produk_img);
         }
-
         $data-> delete();
 
         return $data;
+    }
+    public function update(Request $request,$id){
+        $key = collect($request->all())->keys();
+        // if (condition) {
+        //     # code...
+        // }
+        $update = Produk::find($id);
+        for ($i=0; $i < count($key); $i++) { 
+            $update->update([
+                $key[$i]=> $request->get($key[$i]),
+            ]);
+        }
+        return $update;
     }
 }

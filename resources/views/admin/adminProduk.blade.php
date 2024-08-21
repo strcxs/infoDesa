@@ -93,7 +93,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="editProductModalLabel">Edit Produk</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">&times;</button>
                             </div>
                             <div class="modal-body">
                                 <form id="editProductForm">
@@ -103,7 +103,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="editProductLink" class="form-label">Link Produk:</label>
-                                        <input type="url" class="form-control" id="editProductLink" name="productLink" required>
+                                        <input type="text" class="form-control" id="editProductLink" name="productLink" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="editProductImages" class="form-label">Gambar Produk:</label>
@@ -130,6 +130,27 @@
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script>
         // $('#tabel').DataTable();
+        function uploadFiles(productId,number) {
+            var files = $('#editProductImages')[0].files;
+            
+            var fileData = new FormData();
+            fileData.append('productImages[]', files[number]);
+
+            $.ajax({
+                url: `/api/produkImg/${productId}`, // Pastikan endpoint sesuai
+                method: 'POST',
+                data: fileData,
+                contentType: false,
+                processData: false,
+                success: function() {
+                    console.log('File uploaded successfully!');
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error uploading file:', error);
+                }
+            });
+        }
+
         $(document).ready(function(){
             function loadProducts() {
                 $.ajax({
@@ -203,11 +224,11 @@
             window.removeImage = function(productId, imageId) {
                 if (confirm('Anda yakin ingin menghapus gambar ini?')) {
                     $.ajax({
-                        url: `/api/produk/${productId}/images/${imageId}`,
+                        url: `/api/produkImg/${imageId}`,
                         method: 'DELETE',
                         success: function() {
                             alert('Gambar berhasil dihapus!');
-                            loadProducts(); // Muat ulang data produk
+                            window.location.reload();
                         },
                         error: function(xhr, status, error) {
                             console.error('Error deleting image:', error);
@@ -219,89 +240,68 @@
             // Tangani pengiriman form edit produk
             $('#editProductForm').on('submit', function(event) {
                 event.preventDefault();
-                const formData = new FormData(this);
+                var formData = new FormData();
+                var files = $('#editProductImages')[0].files;
+                
+                if (files.length === 0) {
+                    $.ajax({
+                        url: `${'/api/produk'}/${$('#editProductId').val()}`,
+                        method: 'PUT',
+                        data: {
+                            "nama":$("#editProductName").val(),
+                            "deskripsi":"-",
+                            "link":$("#editProductLink").val()
+                        },
+                        success: function() {
+                            alert('Produk berhasil diperbarui!');
+                            $('#editProductModal').modal('hide');
+                            window.location.reload();
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error updating product:', error);
+                        }
+                    });
+                }
+
+                $.each(files, function(i, file) {
+                    formData.append('productImages[]', file);
+                });
+
                 $.ajax({
                     url: `${'/api/produk'}/${$('#editProductId').val()}`,
                     method: 'PUT',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function() {
+                    data: {
+                        "nama":$("#editProductName").val(),
+                        "deskripsi":"-",
+                        "link":$("#editProductLink").val()
+                    },
+                    success: function(response) {
+                        ///
+                        var i = 0;
+                        formData.forEach(function(value, key) {
+                            $.ajax({
+                                url: `${'/api/produkImg'}/`,
+                                method: 'POST',
+                                data: {
+                                    "id_produk":response.id,
+                                },
+                                success: function(responsex){
+                                    uploadFiles(responsex.id,i);
+                                    i++;
+                                }
+                            });
+                            
+                        });
+                        
                         alert('Produk berhasil diperbarui!');
-                        $('#editProductModal').modal('hide');
-                        loadProducts(); // Muat ulang data produk
+                        window.location.reload();
                     },
                     error: function(xhr, status, error) {
                         console.error('Error updating product:', error);
                     }
                 });
             });
-
-            // Muat produk saat halaman dimuat
             loadProducts();
-
-            // $.ajax({
-            //     url: "/api/galeri/",
-            //     method: "GET", // First change type to method here
-            //     success: function(response) {
-            //         response.forEach(data => {
-            //             var img = null;
-            //             var link = null;
-            //             var youtube = null
-            //             if (data.image==null) {
-            //                 img = "-";
-            //                 link = "<td><p>-</p></td>";
-            //                 youtube = "<td><a href=\""+data.youTube+"\">Youtube Link</a></td>";
-            //             }else{
-            //                 img = "{{asset('storage/images/galeri/')}}" + '/' + data.image;
-            //                 link = "<td><a href=\""+img+"\">Image Link</a></td>";
-            //                 youtube = "<td><p>-</p></td>";
-            //             }
-            //             $('#dataTabel').append(
-            //                 "<tr>"+
-            //                     link +
-            //                     youtube +
-            //                 "    <td>"+data.caption+"</td>"+
-            //                 "    <td class=\"action-buttons\">"+
-            //                 "        <button class=\"btn btn-warning\" data-toggle=\"modal\" data-target=\"#editModal-"+data.id+"\" data-id=\"2\">Edit</button>"+
-            //                 "        <button class='btn btn-danger' id=\"delete-"+data.id+"\">Delete</button>"+
-            //                 "    </td>"+
-            //                 "</tr>"
-            //             );
-            //             $('#modal').append(
-            //                 "<div class=\"modal fade\" id=\"editModal-"+data.id+"\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"editModalLabel\" aria-hidden=\"true\">"+
-            //                 "    <div class=\"modal-dialog\" role=\"document\">"+
-            //                 "        <div class=\"modal-content\">"+
-            //                 "            <div class=\"modal-header\">"+
-            //                 "                <h5 class=\"modal-title\" id=\"editModalLabel\">Edit Caption</h5>"+
-            //                 "                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">"+
-            //                 "                    <span aria-hidden=\"true\">&times;</span>"+
-            //                 "                </button>"+
-            //                 "            </div>"+
-            //                 "            <div class=\"modal-body\">"+
-            //                 "                <form id=\"editForm\">"+
-            //                 "                    <div class=\"form-group\">"+
-            //                 "                        <label for=\"imageCaption\">Caption</label>"+
-            //                 "                        <input type=\"text\" class=\"form-control\" id=\"imageCaption-"+data.id+"\" value=\""+data.caption+"\" required>"+
-            //                 "                    </div>"+
-            //                 "                    <input type=\"hidden\" id=\"rowIndex\">"+
-            //                 "                    <button id=\"edit-"+data.id+"\" type=\"button\" class=\"btn btn-primary\">Save changes</button>"+
-            //                 "                </form>"+
-            //                 "            </div>"+
-            //                 "        </div>"+
-            //                 "    </div>"+
-            //                 "</div>"
-            //             )
-            //             $("#edit-"+data.id+"").click(function(event){
-            //                 Update(data.id,$("#imageCaption-"+data.id+"").val());
-            //             });
-            //             $("#delete-"+data.id+"").click(function(event){
-            //                 Delete(data.id);
-            //             });
-            //         });
-            //         $('#tabel').DataTable();
-            //     }
-            // });
         });
     </script>
 </body>

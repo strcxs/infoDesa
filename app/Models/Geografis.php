@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Geografis extends Model
 {
     use HasFactory;
-    protected $table = "geografis";
+    protected $table = "geo";
     protected $guarded = [];
 }

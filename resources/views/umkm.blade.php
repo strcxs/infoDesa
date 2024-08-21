@@ -140,12 +140,20 @@
                         );
                         if (data.data_image.length != 0) {
                             data.data_image.forEach((image,index) => {
-                                if (index == 0) {
-                                    $("#produk-img-"+data.id+"").append(
-                                        '<div class="carousel-item active">' +
-                                        '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/produk/${image.produk_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
-                                        '</div>' 
-                                    );
+                                if (image.produk_img != null) {
+                                    if (index == 0) {
+                                        $("#produk-img-"+data.id+"").append(
+                                            '<div class="carousel-item active">' +
+                                            '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/produk/${image.produk_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
+                                            '</div>' 
+                                        );
+                                    }else{
+                                        $("#produk-img-"+data.id+"").append(
+                                            '<div class="carousel-item">' +
+                                            '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/produk/${image.produk_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
+                                            '</div>' 
+                                        );
+                                    }
                                 }else{
                                     $("#produk-img-"+data.id+"").append(
                                         '<div class="carousel-item">' +

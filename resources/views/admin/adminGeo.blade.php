@@ -57,20 +57,48 @@
                 <div class="mt-4">
                     <form>
                         <div class="mb-3">
-                            <label for="about" class="form-label"><strong>Nama Desa :</strong></label>
-                            <textarea class="form-control" id="nama_desa"></textarea>
+                            <label for="kode-desa" class="form-label"><strong>Kode Desa :</strong></label>
+                            <input type="text" class="form-control" id="kode-desa">
                         </div>
                         <div class="mb-3">
-                            <label for="visi" class="form-label"><strong>Alamat Desa :</strong></label>
-                            <textarea class="form-control" id="alamat_desa"></textarea>
+                            <label for="tahun-pembentukan" class="form-label"><strong>Tahun Pembentukan :</strong></label>
+                            <input type="text" class="form-control" id="tahun-pembentukan">
                         </div>
                         <div class="mb-3">
-                            <label for="misi" class="form-label"><Strong>Luas Desa :</Strong></label>
-                            <textarea class="form-control" id="luas_desa"></textarea>
+                            <label for="dasar-hukum" class="form-label"><strong>Dasar Hukum :</strong></label>
+                            <input type="text" class="form-control" id="dasar-hukum">
                         </div>
                         <div class="mb-3">
-                            <label for="demografis" class="form-label"><strong>Jumlah Penduduk :</strong></label>
-                            <textarea class="form-control" id="jumlah_penduduk"></textarea>
+                            <label for="tipologi" class="form-label"><strong>Tipologi :</strong></label>
+                            <input type="text" class="form-control" id="tipologi">
+                        </div>
+                        <div class="mb-3">
+                            <label for="klasifikasi" class="form-label"><strong>Klasifikasi :</strong></label>
+                            <input type="text" class="form-control" id="klasifikasi">
+                        </div>
+                        <div class="mb-3">
+                            <label for="kategori" class="form-label"><strong>Kategori :</strong></label>
+                            <input type="text" class="form-control" id="kategori">
+                        </div>
+                        <div class="mb-3">
+                            <label for="luas-wilayah" class="form-label"><strong>Luas Wilayah :</strong></label>
+                            <input type="text" class="form-control" id="luas-wilayah">
+                        </div>
+                        <div class="mb-3">
+                            <label for="batas-utara" class="form-label"><strong>Batas Sebelah Utara :</strong></label>
+                            <input type="text" class="form-control" id="batas-utara">
+                        </div>
+                        <div class="mb-3">
+                            <label for="batas-selatan" class="form-label"><strong>Batas Sebelah Selatan :</strong></label>
+                            <input type="text" class="form-control" id="batas-selatan">
+                        </div>
+                        <div class="mb-3">
+                            <label for="batas-timur" class="form-label"><strong>Batas Sebelah Timur :</strong></label>
+                            <input type="text" class="form-control" id="batas-timur">
+                        </div>
+                        <div class="mb-3">
+                            <label for="batas-barat" class="form-label"><strong>Batas Sebelah Barat :</strong></label>
+                            <input type="text" class="form-control" id="batas-barat">
                         </div>
                         <button id="edit" type="button" class="btn btn-warning">Edit</button>
                     </form>
@@ -91,10 +119,22 @@
                 url: "/api/geografis/",
                 method: "GET", // First change type to method here
                 success: function(response) {
-                    $("#nama_desa").text(response.nama_desa);
-                    $("#alamat_desa").text(response.alamat_desa);
-                    $("#luas_desa").text(response.luas_desa);
-                    $("#jumlah_penduduk").text(response.jumlah_penduduk);
+                    $('#kode-desa').val(response.kode_desa);
+                    $('#tahun-pembentukan').val(response.tahun_pembentukan);
+                    $('#dasar-hukum').val(response.dasar_hukum);
+                    $('#tipologi').val(response.tipologi);
+                    $('#klasifikasi').val(response.klasifikasi);
+                    $('#kategori').val(response.kategori);
+                    $('#luas-wilayah').val(response.luas_wilayah);
+                    $('#batas-utara').val(response.batas_utara);
+                    $('#batas-selatan').val(response.batas_selatan);
+                    $('#batas-timur').val(response.batas_timur);
+                    $('#batas-barat').val(response.batas_barat);
+
+                    // $("#nama_desa").text(response.nama_desa);
+                    // $("#alamat_desa").text(response.alamat_desa);
+                    // $("#luas_desa").text(response.luas_desa);
+                    // $("#jumlah_penduduk").text(response.jumlah_penduduk);
                 }
             });
             
@@ -119,10 +159,22 @@
                             url: "/api/geografis/1",
                             method: "PUT", // First change type to method here
                             data: {
-                                "nama_desa" : $("#nama_desa").val(),
-                                "alamat_desa" : $("#alamat_desa").val(),
-                                "luas_desa" : $("#luas_desa").val(),
-                                "jumlah_penduduk" : $("#jumlah_penduduk").val(),
+                                "kode_desa" : $("#kode-desa").val(),
+                                "tahun_pembentukan" : $("#tahun-pembentukan").val(),
+                                "dasar_hukum" : $("#dasar-hukum").val(),
+                                "tipologi" : $("#tipologi").val(),
+                                "klasifikasi" : $("#klasifikasi").val(),
+                                "kategori" : $("#kategori").val(),
+                                "luas_wilayah" : $("#luas-wilayah").val(),
+                                "batas_utara" : $("#batas-utara").val(),
+                                "batas_selatan" : $("#batas-selatan").val(),
+                                "batas_timur" : $("#batas-timur").val(),
+                                "batas_barat" : $("#batas-barat").val(),
+
+                                // "nama_desa" : $("#nama_desa").val(),
+                                // "alamat_desa" : $("#alamat_desa").val(),
+                                // "luas_desa" : $("#luas_desa").val(),
+                                // "jumlah_penduduk" : $("#jumlah_penduduk").val(),
                             },
                             success: function(response) {
                                 window.location.reload();

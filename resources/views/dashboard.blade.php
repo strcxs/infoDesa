@@ -59,19 +59,79 @@
             <div class="col-md-6 text-justify">
                 <h2>geografis</h2><br>
                 {{-- content  --}}
-                <span><strong>Nama Desa:</strong></span><br>
+                <table class="table x-table-striped table-sm">
+                    <tbody>
+                      <tr>
+                        <td width="40%"><strong>Kode Desa</strong></td>
+                        <td width="1px">:</td>
+                        <td id="kode-desa"></td>
+                      </tr>
+                      <tr>
+                        <td width="40%"><strong>Tahun Pembentukan</strong></td>
+                        <td width="1px">:</td>
+                        <td id="tahun-pembentukan" class="text-truncate"></td>
+                      </tr>
+                      <tr>
+                        <td width="40%"><strong>Dasar Hukum</strong></td>
+                        <td width="1px">:</td>
+                        <td id="dasar-hukum" class="text-truncate"></td>
+                      </tr>
+                      <tr>
+                        <td width="40%"><strong>Tipologi</strong></td>
+                        <td width="1px">:</td>
+                        <td id="tipologi" class="text-truncate"></td>
+                      </tr>
+                      <tr>
+                        <td width="40%"><strong>Klasifikasi</strong></td>
+                        <td width="1px">:</td>
+                        <td id="klasifikasi" class="text-truncate"></td>
+                      </tr>
+                      <tr>
+                        <td width="40%"><strong>Kategori</strong></td>
+                        <td width="1px">:</td>
+                        <td id="kategori" class="text-truncate"></td>
+                      </tr>
+                      <tr>
+                        <td width="40%"><strong>Luas Wilayah</strong></td>
+                        <td width="1px">:</td>
+                        <td id="luas-wilayah" class="text-truncate"></td>
+                      </tr>
+                      <tr>
+                        <td width="40%"><strong>Batas Sebelah Utara</strong></td>
+                        <td width="1px">:</td>
+                        <td id="batas-utara" class="text-truncate"></td>
+                      </tr>
+                      <tr>
+                        <td width="40%"><strong>Batas Sebelah Selatan</strong></td>
+                        <td width="1px">:</td>
+                        <td id="batas-selatan" class="text-truncate"></td>
+                      </tr>
+                      <tr>
+                        <td width="40%"><strong>Batas Sebelah Timur</strong></td>
+                        <td width="1px">:</td>
+                        <td id="batas-timur" class="text-truncate"></td>
+                      </tr>
+                      <tr>
+                        <td width="40%"><strong>Batas Sebelah Barat</strong></td>
+                        <td width="1px">:</td>
+                        <td id="batas-barat" class="text-truncate"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+                {{-- <span><strong>Nama Desa:</strong></span><br>
                 <span id="nama_desa"></span><br>
                 <span><strong>Alamat Desa:</strong></span><br>
                 <span id="alamat_desa"></span><br>
                 <span><strong>Luas Desa</strong></span><br>
                 <span id="luas_desa"></span><br>
                 <span><strong>Jumlah Penduduk:</strong></span><br>
-                <span id="jumlah_penduduk"></span><br>
+                <span id="jumlah_penduduk"></span><br> --}}
             </div>
             <div class="col-md-6 d-flex justify-content-center">
                 <div class="maps">
                     <div style="width: 100%">
-                        <iframe width="450px" height="300px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Kertawangi+(Desa%20Kertawangi)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="https://www.gps.ie/">gps systems</a></iframe>
+                        <iframe width="450px" height="500px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Kertawangi+(Desa%20Kertawangi)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="https://www.gps.ie/">gps systems</a></iframe>
                     </div>
                 </div>
                 {{-- <img src="https://asset-a.grid.id//crop/0x0:0x0/700x465/photo/2021/08/05/kondisi-geografis-pulau-pulau-di-20210805121131.jpg" alt="Kepala Desa" class="img-fluid"> --}}
@@ -236,10 +296,22 @@
                 url: "/api/geografis/",
                 method: "GET", // First change type to method here
                 success: function(response) {
-                    $('#nama_desa').text(response.nama_desa);
-                    $('#alamat_desa').text(response.alamat_desa);
-                    $('#luas_desa').text(formatAngka(response.luas_desa)+" km²");
-                    $('#jumlah_penduduk').text(formatAngka(response.jumlah_penduduk)+" Jiwa");
+                    $('#kode-desa').text(response.kode_desa);
+                    $('#tahun-pembentukan').text(response.tahun_pembentukan);
+                    $('#dasar-hukum').text(response.dasar_hukum);
+                    $('#tipologi').text(response.tipologi);
+                    $('#klasifikasi').text(response.klasifikasi);
+                    $('#kategori').text(response.kategori);
+                    $('#luas-wilayah').text(response.luas_wilayah);
+                    $('#batas-utara').text(response.batas_utara);
+                    $('#batas-selatan').text(response.batas_selatan);
+                    $('#batas-timur').text(response.batas_timur);
+                    $('#batas-barat').text(response.batas_barat);
+
+                    // $('#nama_desa').text(response.nama_desa);
+                    // $('#alamat_desa').text(response.alamat_desa);
+                    // $('#luas_desa').text(formatAngka(response.luas_desa)+" km²");
+                    // $('#jumlah_penduduk').text(formatAngka(response.jumlah_penduduk)+" Jiwa");
                 }
             });
             $.ajax({
