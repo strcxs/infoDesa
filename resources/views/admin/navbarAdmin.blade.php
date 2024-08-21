@@ -23,6 +23,18 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link text-white {{ request()->routeIs('adminGeo') ? 'active' : '' }}" href="{{ route('adminGeo') }}">
+                    <i class="fas fa-book-atlas"></i>
+                    Geografis
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ request()->routeIs('adminAPBN') ? 'active' : '' }}" href="{{ route('adminAPBN') }}">
+                    <i class="fas fa-dollar-sign"></i>
+                    APBN
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link text-white {{ request()->routeIs('adminStruktur') ? 'active' : '' }}" href="{{ route('adminStruktur') }}">
                     <i class="fas fa-sitemap"></i>
                     Struktur
@@ -38,6 +50,12 @@
                 <a class="nav-link text-white {{ request()->routeIs('adminBanner') ? 'active' : '' }}" href="{{ route('adminBanner') }}">
                     <i class="fas fa-image"></i>
                     Banner
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ request()->routeIs('adminProduk') ? 'active' : '' }}" href="{{ route('adminProduk') }}">
+                    <i class="fas fa-cart-shopping"></i>
+                    UMKM
                 </a>
             </li>
         </ul>

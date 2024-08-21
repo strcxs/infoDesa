@@ -53,28 +53,24 @@
 
             <!-- Content -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-4 content">
-                <h2>Dashboard Admin</h2>
+                <h2>Pengaturan Geografis</h2>
                 <div class="mt-4">
                     <form>
                         <div class="mb-3">
-                            <label for="about" class="form-label"><strong>Tentang Kami</strong></label>
-                            <textarea class="form-control" id="about"></textarea>
+                            <label for="about" class="form-label"><strong>Nama Desa :</strong></label>
+                            <textarea class="form-control" id="nama_desa"></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="visi" class="form-label"><strong>Visi</strong></label>
-                            <textarea class="form-control" id="visi"></textarea>
+                            <label for="visi" class="form-label"><strong>Alamat Desa :</strong></label>
+                            <textarea class="form-control" id="alamat_desa"></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="misi" class="form-label"><Strong>Misi</Strong></label>
-                            <textarea class="form-control" id="misi"></textarea>
+                            <label for="misi" class="form-label"><Strong>Luas Desa :</Strong></label>
+                            <textarea class="form-control" id="luas_desa"></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="demografis" class="form-label"><strong>Demografis</strong></label>
-                            <textarea class="form-control" id="demografis"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="fileUpload" class="form-label"><strong>Foto Kepala Desa</strong></label>
-                            <input type="file" class="form-control" id="fileUpload">
+                            <label for="demografis" class="form-label"><strong>Jumlah Penduduk :</strong></label>
+                            <textarea class="form-control" id="jumlah_penduduk"></textarea>
                         </div>
                         <button id="edit" type="button" class="btn btn-warning">Edit</button>
                     </form>
@@ -92,13 +88,13 @@
     <script>
         $(document).ready(function(){
             $.ajax({
-                url: "/api/dashboard/",
+                url: "/api/geografis/",
                 method: "GET", // First change type to method here
                 success: function(response) {
-                    $("#about").text(response.about);
-                    $("#visi").text(response.visi);
-                    $("#misi").text(response.misi);
-                    $("#demografis").text(response.demografis);
+                    $("#nama_desa").text(response.nama_desa);
+                    $("#alamat_desa").text(response.alamat_desa);
+                    $("#luas_desa").text(response.luas_desa);
+                    $("#jumlah_penduduk").text(response.jumlah_penduduk);
                 }
             });
             
@@ -119,49 +115,19 @@
                             'Dashboard success Updated.',
                             'success'
                         );
-                        var file = $('#fileUpload').prop('files')[0];
-                        var images = new FormData();
-                        images.append('kades_image', file);
-                        
-                        if (file == undefined) {
-                            $.ajax({
-                                url: "/api/dashboard/1",
-                                method: "PUT", // First change type to method here
-                                data: {
-                                    "about" : $("#about").val(),
-                                    "visi" : $("#visi").val(),
-                                    "misi" : $("#misi").val(),
-                                    "demografis" : $("#demografis").val(),
-                                },
-                                success: function(response) {
-                                    window.location.reload();
-                                }
-                            });
-                        }else{
-                            $.ajax({
-                                url: "/api/dashboard/1",
-                                method: "POST", // First change type to method here    
-                                data: images,
-                                processData: false,
-                                contentType: false,
-                                success: function(response) {
-                                    $.ajax({
-                                        url: "/api/dashboard/1",
-                                        method: "PUT", // First change type to method here
-                                        data: {
-                                            "about" : $("#about").val(),
-                                            "visi" : $("#visi").val(),
-                                            "misi" : $("#misi").val(),
-                                            "demografis" : $("#demografis").val(),
-                                        },
-                                        success: function(response) {
-                                            window.location.reload();
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                        
+                        $.ajax({
+                            url: "/api/geografis/1",
+                            method: "PUT", // First change type to method here
+                            data: {
+                                "nama_desa" : $("#nama_desa").val(),
+                                "alamat_desa" : $("#alamat_desa").val(),
+                                "luas_desa" : $("#luas_desa").val(),
+                                "jumlah_penduduk" : $("#jumlah_penduduk").val(),
+                            },
+                            success: function(response) {
+                                window.location.reload();
+                            }
+                        });
                     } else if (result.isDismissed) {
                         Swal.fire(
                             'Cancelled',

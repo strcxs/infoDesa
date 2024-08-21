@@ -53,28 +53,24 @@
 
             <!-- Content -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-4 content">
-                <h2>Dashboard Admin</h2>
+                <h2>Pengaturan APBN</h2>
                 <div class="mt-4">
                     <form>
                         <div class="mb-3">
-                            <label for="about" class="form-label"><strong>Tentang Kami</strong></label>
-                            <textarea class="form-control" id="about"></textarea>
+                            <label for="about" class="form-label"><strong>Pendapatan :</strong></label>
+                            <textarea class="form-control" id="pendapatan"></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="visi" class="form-label"><strong>Visi</strong></label>
-                            <textarea class="form-control" id="visi"></textarea>
+                            <label for="visi" class="form-label"><strong>Pengeluaran :</strong></label>
+                            <textarea class="form-control" id="pengeluaran"></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="misi" class="form-label"><Strong>Misi</Strong></label>
-                            <textarea class="form-control" id="misi"></textarea>
+                            <label for="misi" class="form-label"><Strong>Belanja :</Strong></label>
+                            <textarea class="form-control" id="belanja"></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="demografis" class="form-label"><strong>Demografis</strong></label>
-                            <textarea class="form-control" id="demografis"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="fileUpload" class="form-label"><strong>Foto Kepala Desa</strong></label>
-                            <input type="file" class="form-control" id="fileUpload">
+                            <label for="demografis" class="form-label"><strong>Penerimaan</strong></label>
+                            <textarea class="form-control" id="penerimaan"></textarea>
                         </div>
                         <button id="edit" type="button" class="btn btn-warning">Edit</button>
                     </form>
@@ -92,13 +88,13 @@
     <script>
         $(document).ready(function(){
             $.ajax({
-                url: "/api/dashboard/",
+                url: "/api/anggaran/",
                 method: "GET", // First change type to method here
                 success: function(response) {
-                    $("#about").text(response.about);
-                    $("#visi").text(response.visi);
-                    $("#misi").text(response.misi);
-                    $("#demografis").text(response.demografis);
+                    $("#pendapatan").text(response.pendapatan);
+                    $("#pengeluaran").text(response.pengeluaran);
+                    $("#belanja").text(response.belanja);
+                    $("#penerimaan").text(response.penerimaan);
                 }
             });
             
@@ -119,49 +115,19 @@
                             'Dashboard success Updated.',
                             'success'
                         );
-                        var file = $('#fileUpload').prop('files')[0];
-                        var images = new FormData();
-                        images.append('kades_image', file);
-                        
-                        if (file == undefined) {
-                            $.ajax({
-                                url: "/api/dashboard/1",
-                                method: "PUT", // First change type to method here
-                                data: {
-                                    "about" : $("#about").val(),
-                                    "visi" : $("#visi").val(),
-                                    "misi" : $("#misi").val(),
-                                    "demografis" : $("#demografis").val(),
-                                },
-                                success: function(response) {
-                                    window.location.reload();
-                                }
-                            });
-                        }else{
-                            $.ajax({
-                                url: "/api/dashboard/1",
-                                method: "POST", // First change type to method here    
-                                data: images,
-                                processData: false,
-                                contentType: false,
-                                success: function(response) {
-                                    $.ajax({
-                                        url: "/api/dashboard/1",
-                                        method: "PUT", // First change type to method here
-                                        data: {
-                                            "about" : $("#about").val(),
-                                            "visi" : $("#visi").val(),
-                                            "misi" : $("#misi").val(),
-                                            "demografis" : $("#demografis").val(),
-                                        },
-                                        success: function(response) {
-                                            window.location.reload();
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                        
+                        $.ajax({
+                            url: "/api/anggaran/1",
+                            method: "PUT", // First change type to method here
+                            data: {
+                                "pendapatan" : $("#pendapatan").val(),
+                                "pengeluaran" : $("#pengeluaran").val(),
+                                "penerimaan" : $("#penerimaan").val(),
+                                "belanja" : $("#belanja").val(),
+                            },
+                            success: function(response) {
+                                window.location.reload();
+                            }
+                        });
                     } else if (result.isDismissed) {
                         Swal.fire(
                             'Cancelled',

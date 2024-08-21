@@ -15,6 +15,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/admin', function () {
     return view('admin/admin');
 })->name("admin");
+Route::get('/admin/geografis', function () {
+    return view('admin/adminGeo');
+})->name("adminGeo");
+Route::get('/admin/APBN', function () {
+    return view('admin/adminAPBN');
+})->name("adminAPBN");
 Route::get('/admin/Galery', function () {
     return view('admin/adminGalery');
 })->name("adminGalery");
@@ -24,6 +30,9 @@ Route::get('/admin/struktur', function () {
 Route::get('/admin/banner', function () {
     return view('admin/adminBanner');
 })->name("adminBanner");
+Route::get('/admin/produk', function () {
+    return view('admin/adminProduk');
+})->name("adminProduk");
 
 
 Route::get('/', function () {

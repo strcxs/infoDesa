@@ -35,7 +35,7 @@
                     Potensi desa
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Produk UMKM</a>
+                    <a class="dropdown-item" href="{{ route('produk') }}">Produk UMKM</a>
                     <a class="dropdown-item" href="#">Atraksi</a>
                 </div>
             </li>
