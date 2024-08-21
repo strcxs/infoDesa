@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     {{-- data tabel  --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
 
     <style>
@@ -90,28 +92,80 @@
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script>
         function Delete(id){
-            $.ajax({
-                url: "/api/banner/"+id,
-                method: "DELETE", // First change type to method here
-                success: function(response) {
-                    window.location.reload();
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Delete",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Delete',
+                cancelButtonText: 'No, cancel!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Deleted!',
+                        'Delete successfully.',
+                        'success'
+                    );
+                    // coding
+                    $.ajax({
+                        url: "/api/banner/"+id,
+                        method: "DELETE", // First change type to method here
+                        success: function(response) {
+                            window.location.reload();
+                        }
+                    });
+                    
+                } else if (result.isDismissed) {
+                    Swal.fire(
+                        'Cancelled',
+                        '',
+                        'error'
+                    );
                 }
             });
         }
         $(document).ready(function(){
             $("#add").click(function(event){ 
-                var file = $('#fileUpload').prop('files')[0];
-                var images = new FormData();
-                images.append('image', file);
-
-                $.ajax({
-                    url: "/api/banner/",
-                    method: "POST",
-                    processData: false,
-                    contentType: false,
-                    data:images,
-                    success: function(response) {
-                        window.location.reload();
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Add banner",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Add',
+                    cancelButtonText: 'No, cancel!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            'Add New Baner!',
+                            'success add new banner.',
+                            'success'
+                        );
+                        // coding
+                        var file = $('#fileUpload').prop('files')[0];
+                        var images = new FormData();
+                        images.append('image', file);
+        
+                        $.ajax({
+                            url: "/api/banner/",
+                            method: "POST",
+                            processData: false,
+                            contentType: false,
+                            data:images,
+                            success: function(response) {
+                                window.location.reload();
+                            }
+                        });
+                        
+                    } else if (result.isDismissed) {
+                        Swal.fire(
+                            'Cancelled',
+                            '',
+                            'error'
+                        );
                     }
                 });
             });

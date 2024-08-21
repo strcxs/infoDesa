@@ -12,6 +12,10 @@
     {{-- data tabel  --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+
 
     <style>
         .sidebar {
@@ -89,18 +93,44 @@
             });
         $(document).ready(function(){
             $("#add").click(function(event){ 
-                var file = $('#fileUpload').prop('files')[0];
-                var images = new FormData();
-                images.append('image', file);
-
-                $.ajax({
-                    url: "/api/struktur/1",
-                    method: "POST",
-                    processData: false,
-                    contentType: false,
-                    data:images,
-                    success: function(response) {
-                        window.location.reload();
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Change Structure",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No, cancel!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            'Updated!',
+                            'success Updated.',
+                            'success'
+                        );
+                        // coding
+                        var file = $('#fileUpload').prop('files')[0];
+                        var images = new FormData();
+                        images.append('image', file);
+        
+                        $.ajax({
+                            url: "/api/struktur/1",
+                            method: "POST",
+                            processData: false,
+                            contentType: false,
+                            data:images,
+                            success: function(response) {
+                                window.location.reload();
+                            }
+                        });
+                        
+                    } else if (result.isDismissed) {
+                        Swal.fire(
+                            'Cancelled',
+                            '',
+                            'error'
+                        );
                     }
                 });
             });

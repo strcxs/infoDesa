@@ -12,6 +12,8 @@
     {{-- data tabel  --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
     <style>
         .sidebar {
@@ -184,25 +186,77 @@
             });
         });
         function Update(id,caption){
-            $.ajax({
-                url: "/api/galeri/"+id,
-                method: "PUT", // First change type to method here
-                data:{
-                    "caption":caption,
-                },
-                success: function(response) {
-                    window.location.reload();
-                }
-            });
+            Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Update this Galery",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Update',
+                    cancelButtonText: 'No, cancel!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            'Updated!',
+                            'Dashboard success Updated.',
+                            'success'
+                        );
+                        // coding
+                        $.ajax({
+                            url: "/api/galeri/"+id,
+                            method: "PUT", // First change type to method here
+                            data:{
+                                "caption":caption,
+                            },
+                            success: function(response) {
+                                window.location.reload();
+                            }
+                        });
+                        
+                    } else if (result.isDismissed) {
+                        Swal.fire(
+                            'Cancelled',
+                            '',
+                            'error'
+                        );
+                    }
+                });
         }
         function Delete(id){
-            $.ajax({
-                url: "/api/galeri/"+id,
-                method: "DELETE", // First change type to method here
-                success: function(response) {
-                    window.location.reload();
-                }
-            });
+            Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Delete this Galery",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Delete',
+                    cancelButtonText: 'No, cancel!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Delete Successfully',
+                            'success'
+                        );
+                        // coding
+                        $.ajax({
+                            url: "/api/galeri/"+id,
+                            method: "DELETE", // First change type to method here
+                            success: function(response) {
+                                window.location.reload();
+                            }
+                        });
+                        
+                    } else if (result.isDismissed) {
+                        Swal.fire(
+                            'Cancelled',
+                            '',
+                            'error'
+                        );
+                    }
+                });
         }
         function convertToEmbedUrl(youtubeUrl) {
             // Regex untuk mengekstrak ID video dari URL YouTube
@@ -223,43 +277,69 @@
 
 
             $("#add").click(function(event){ 
-                if ($('#mediaType').val()=="video") {
-                    $.ajax({
-                        url: "/api/galeri/",
-                        method: "POST", // First change type to method here
-                        data:{
-                            "youTube":convertToEmbedUrl($("#youtubeLink").val()),
-                            "caption":$("#captionY").val(),
-                        },
-                        success: function(response) {
-                            window.location.reload();
-                        }
-                    });
-                }else{
-                    $.ajax({
-                        url: "/api/galeri/",
-                        method: "POST", // First change type to method here
-                        data:{
-                            "caption":$("#caption").val(),
-                        },
-                        success: function(response) {
-                            var file = $('#fileUpload').prop('files')[0];
-                            var images = new FormData();
-                            images.append('image', file);
-                            
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Add New Galery",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes,',
+                    cancelButtonText: 'No, cancel!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            'Updated!',
+                            'Galery success Updated.',
+                            'success'
+                        );
+                        // coding
+                        if ($('#mediaType').val()=="video") {
                             $.ajax({
-                                url: "/api/galeri/"+response.id,
-                                method: "POST",
-                                processData: false,
-                                contentType: false,
-                                data:images,
+                                url: "/api/galeri/",
+                                method: "POST", // First change type to method here
+                                data:{
+                                    "youTube":convertToEmbedUrl($("#youtubeLink").val()),
+                                    "caption":$("#captionY").val(),
+                                },
                                 success: function(response) {
                                     window.location.reload();
                                 }
                             });
+                        }else{
+                            $.ajax({
+                                url: "/api/galeri/",
+                                method: "POST", // First change type to method here
+                                data:{
+                                    "caption":$("#caption").val(),
+                                },
+                                success: function(response) {
+                                    var file = $('#fileUpload').prop('files')[0];
+                                    var images = new FormData();
+                                    images.append('image', file);
+                                    
+                                    $.ajax({
+                                        url: "/api/galeri/"+response.id,
+                                        method: "POST",
+                                        processData: false,
+                                        contentType: false,
+                                        data:images,
+                                        success: function(response) {
+                                            window.location.reload();
+                                        }
+                                    });
+                                }
+                            });
                         }
-                    });
-                }
+                        
+                    } else if (result.isDismissed) {
+                        Swal.fire(
+                            'Cancelled',
+                            '',
+                            'error'
+                        );
+                    }
+                });
             });
             
 
