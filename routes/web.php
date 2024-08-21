@@ -35,6 +35,8 @@ Route::get('/galeri', function () {
 Route::get('/struktur', function () {
     return view('struktur');
 })->name("struktur");
-
+Route::get('/produk', function () {
+    return view('umkm');
+})->name("produk");
 
 

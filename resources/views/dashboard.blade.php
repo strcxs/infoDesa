@@ -108,18 +108,15 @@
         function toggleReadMore() {
             var dots = document.getElementById("dots");
             var moreText = document.getElementById("more");
-            var btnText = document.querySelector("button");
             var moreButton = document.getElementById("readMore");
 
             if (dots.style.display === "none") {
                 dots.style.display = "inline";
-                btnText.textContent = "Read more";
                 moreText.style.display = "none";
                 moreButton.innerText = "Tampilkan lebih banyak"
             } else {
                 dots.style.display = "none";
                 moreButton.innerText = "Tampilkan lebih sedikit"
-                btnText.textContent = "Read less";
                 moreText.style.display = "inline";
             }
         }

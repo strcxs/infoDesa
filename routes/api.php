@@ -24,6 +24,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         '/galeri' => 'galeriController',
         '/struktur' => 'strukturController',
         '/banner' => 'bannerController',
+        '/produk' => 'controllerProduk',
     ]);
     Route::post('/dashboard/{id}', 'dashboardController@update');
     Route::post('/galeri/{id}', 'galeriController@update');
