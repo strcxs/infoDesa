@@ -53,7 +53,7 @@
 
             <!-- Content -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-4 content">
-                <h2>Pengaturan APBN</h2>
+                <h2>Pengaturan APBD</h2>
                 <div class="mt-4">
                     <form>
                         <div class="mb-3">

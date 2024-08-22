@@ -21,9 +21,9 @@
           flex-direction: column;
           justify-content: flex-end;
         }
-
-        #button {
-            /* justify-content: flex-end; */
+        .btn-custom{
+            background-color: #f67828;
+            color: #ffffff;
         }
       </style>
 </head>
@@ -68,9 +68,7 @@
         </div>
     </div>
 
-    <footer class="bg-light text-center py-3">
-        <p>&copy; 2024 Nurtanio University KKN Kertawangi. All rights reserved.</p>
-    </footer>
+    @include('footer')
 
     <!-- Link ke Bootstrap JS dan dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -107,11 +105,11 @@
                         number = null;
                         whastapp = null;
                         if (isValidPhoneNumber(data.link)) {
-                            number = '<a href="tel:'+data.link+'" id="button" class="btn btn-primary mb-2"><i class="fas fa-phone"></i> hubungi</a>';
-                            whastapp = '<a href="https://wa.me/'+convertPhoneNumber(data.link)+'" class="btn btn-success"><i class="fab fa-whatsapp"></i> whatsapp</a>';
+                            number = '<a href="tel:'+data.link+'" id="button" class="btn btn-custom mb-2"><i class="fas fa-cart-shopping"></i> Beli Sekarang</a>';
+                            whastapp = '<a href="https://wa.me/'+convertPhoneNumber(data.link)+'" class="btn btn-success"><i class="fab fa-whatsapp"></i> Whatsapp</a>';
                         }else{
-                            number = '<a href="'+data.link+'" id="button" class="btn btn-primary mb-2"><i class="fas fa-phone"></i> hubungi</a>';
-                            whastapp = '<button href="#" disabled="true" class="btn btn-success" ><i class="fab fa-whatsapp"></i> whatsapp</button>';
+                            number = '<a href="'+data.link+'" id="button" class="btn btn-custom mb-2"><i class="fas fa-cart-shopping"></i> Beli Sekarang</a>';
+                            whastapp = '<button href="#" disabled="true" class="btn btn-success" ><i class="fab fa-whatsapp"></i> Whatsapp</button>';
                         }
                         $('#content-produk').append(
                             '<div class="col-6 col-lg-4">' +

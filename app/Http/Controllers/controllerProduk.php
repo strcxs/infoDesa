@@ -43,4 +43,15 @@ class controllerProduk extends Controller
         }
         return $update;
     }
+    public function store(Request $request){
+        $key = collect($request->all())->keys();
+        
+        $create = Produk::create([
+            "nama"=> $request->get("nama"),
+            "deskripsi"=> $request->get("deskripsi"),
+            "link"=> $request->get("link"),
+        ]);
+        return $create;
+    }
+    
 }

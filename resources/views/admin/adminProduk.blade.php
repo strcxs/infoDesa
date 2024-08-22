@@ -64,7 +64,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="productLink" class="form-label">Link Produk / Nomor Hp:</label>
-                        <input type="url" class="form-control" id="productLink" name="productLink" required>
+                        <input type="text" class="form-control" id="productLink" name="productLink" required>
                     </div>
                     <div class="mb-3">
                         <label for="productImages" class="form-label">Gambar Produk:</label>
@@ -130,12 +130,23 @@
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script>
         // $('#tabel').DataTable();
-        function uploadFiles(productId,number) {
-            var files = $('#editProductImages')[0].files;
-            
-            var fileData = new FormData();
-            fileData.append('productImages[]', files[number]);
+        function uploadFiles(productId,number,bool) {
+            var fileData = null;
+            var max = null;
+            if (bool) {
+                var files = $('#productImages')[0].files;
+                max = files.length;
 
+                var fileData = new FormData();
+                fileData.append('productImages[]', files[number]);
+            }else{
+                var files = $('#editProductImages')[0].files;
+                max = files.length;
+                
+                var fileData = new FormData();
+                fileData.append('productImages[]', files[number]);
+            }
+            
             $.ajax({
                 url: `/api/produkImg/${productId}`, // Pastikan endpoint sesuai
                 method: 'POST',
@@ -143,7 +154,10 @@
                 contentType: false,
                 processData: false,
                 success: function() {
-                    console.log('File uploaded successfully!');
+                    if (number+1 == max) {
+                        console.log('File uploaded successfully!');
+                        // window.location.reload();
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.error('Error uploading file:', error);
@@ -237,6 +251,71 @@
                 }
             };
 
+
+            ///
+            $('#productForm').on('submit', function(event) {
+                event.preventDefault();
+                var formData = new FormData();
+                var files = $('#productImages')[0].files;
+                
+                if (files.length === 0) {
+                    $.ajax({
+                        url: `/api/produk/`,
+                        method: 'POST',
+                        data: {
+                            "nama":$("#productName").val(),
+                            "deskripsi":"-",
+                            "link":$("#productLink").val()
+                        },
+                        success: function() {
+                            window.location.reload();
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error updating product:', error);
+                        }
+                    });
+                }
+
+                $.each(files, function(i, file) {
+                    formData.append('productImages[]', file);
+                });
+                
+                $.ajax({
+                    url: `/api/produk/`,
+                    method: 'POST',
+                    data: {
+                        "nama":$("#productName").val(),
+                        "deskripsi":"-",
+                        "link":$("#productLink").val()
+                    },
+                    success: function(response) {
+                        ///
+                        var i = 0;
+                        console.log(response);
+                        
+                        formData.forEach(function(value, key) {
+                            $.ajax({
+                                url: `${'/api/produkImg'}/`,
+                                method: 'POST',
+                                data: {
+                                    "id_produk":response.id,
+                                },
+                                success: function(responsex){
+                                    uploadFiles(responsex.id,i,true);
+                                    i++;
+                                }
+                            });
+                            
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error updating product:', error);
+                    }
+                });
+            });
+            ///
+
+
             // Tangani pengiriman form edit produk
             $('#editProductForm').on('submit', function(event) {
                 event.preventDefault();
@@ -253,8 +332,6 @@
                             "link":$("#editProductLink").val()
                         },
                         success: function() {
-                            alert('Produk berhasil diperbarui!');
-                            $('#editProductModal').modal('hide');
                             window.location.reload();
                         },
                         error: function(xhr, status, error) {
@@ -286,15 +363,13 @@
                                     "id_produk":response.id,
                                 },
                                 success: function(responsex){
-                                    uploadFiles(responsex.id,i);
+                                    uploadFiles(responsex.id,i,false);
                                     i++;
                                 }
                             });
                             
                         });
-                        
-                        alert('Produk berhasil diperbarui!');
-                        window.location.reload();
+                        // window.location.reload();
                     },
                     error: function(xhr, status, error) {
                         console.error('Error updating product:', error);
