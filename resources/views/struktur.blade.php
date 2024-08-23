@@ -22,9 +22,7 @@
         
         <p class="text-center">Gambar di atas adalah diagram struktur organisasi kami yang memperlihatkan hierarki dan hubungan antar posisi dalam pemerintahan desa. Setiap bagian memiliki peran dan tanggung jawab khusus untuk memastikan kelancaran administrasi dan pelayanan kepada masyarakat.</p>
     </div>
-    <footer class="bg-light text-center py-3">
-        <p>&copy; 2024 Nurtanio University KKN Kertawangi. All rights reserved.</p>
-    </footer>
+    @include('footer')
 
     <!-- Link ke Bootstrap JS dan dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

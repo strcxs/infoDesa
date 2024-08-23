@@ -74,6 +74,10 @@
                                 <input type="file" class="form-control" id="fileUpload">
                             </div>
                             <div class="mb-3">
+                                <label for="title" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="title" placeholder="Enter title">
+                            </div>
+                            <div class="mb-3">
                                 <label for="caption" class="form-label">Caption</label>
                                 <input type="text" class="form-control" id="caption" placeholder="Enter caption">
                             </div>
@@ -83,6 +87,10 @@
                             <div class="mb-3">
                                 <label for="youtubeLink" class="form-label">YouTube Video Link</label>
                                 <input type="url" class="form-control" id="youtubeLink" placeholder="Enter YouTube video link">
+                            </div>
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="titleY" placeholder="Enter title">
                             </div>
                             <div class="mb-3">
                                 <label for="caption" class="form-label">Caption</label>
@@ -98,6 +106,7 @@
                         <tr>
                             <th>Nama Gambar</th>
                             <th>Link Youtube</th>
+                            <th>Titile</th>
                             <th>Caption</th>
                             <th>Aksi</th>
                         </tr>
@@ -143,10 +152,11 @@
                             "<tr>"+
                                 link +
                                 youtube +
+                            "    <td>"+data.title+"</td>"+
                             "    <td>"+data.caption+"</td>"+
                             "    <td class=\"action-buttons\">"+
-                            "        <button class=\"btn btn-warning\" data-toggle=\"modal\" data-target=\"#editModal-"+data.id+"\" data-id=\"2\">Edit</button>"+
-                            "        <button class='btn btn-danger' id=\"delete-"+data.id+"\">Delete</button>"+
+                            "        <button class=\"btn btn-warning\" data-toggle=\"modal\" data-target=\"#editModal-"+data.id+"\" data-id=\"2\"><i class='fa-solid fa-pen'></i></button>"+
+                            "        <button class='btn btn-danger' id=\"delete-"+data.id+"\"><i class='fa-solid fa-trash'></i></button>"+
                             "    </td>"+
                             "</tr>"
                         );
@@ -163,6 +173,8 @@
                             "            <div class=\"modal-body\">"+
                             "                <form id=\"editForm\">"+
                             "                    <div class=\"form-group\">"+
+                            "                        <label for=\"imageCaption\">Title</label>"+
+                            "                        <input type=\"text\" class=\"form-control mb-2\" id=\"imageTitle-"+data.id+"\" value=\""+data.title+"\" required>"+
                             "                        <label for=\"imageCaption\">Caption</label>"+
                             "                        <input type=\"text\" class=\"form-control\" id=\"imageCaption-"+data.id+"\" value=\""+data.caption+"\" required>"+
                             "                    </div>"+
@@ -175,7 +187,7 @@
                             "</div>"
                         )
                         $("#edit-"+data.id+"").click(function(event){
-                            Update(data.id,$("#imageCaption-"+data.id+"").val());
+                            Update(data.id,$("#imageTitle-"+data.id+"").val(),$("#imageCaption-"+data.id+"").val());
                         });
                         $("#delete-"+data.id+"").click(function(event){
                             Delete(data.id);
@@ -185,7 +197,7 @@
                 }
             });
         });
-        function Update(id,caption){
+        function Update(id,title,caption){
             Swal.fire({
                     title: 'Are you sure?',
                     text: "Update this Galery",
@@ -207,6 +219,7 @@
                             url: "/api/galeri/"+id,
                             method: "PUT", // First change type to method here
                             data:{
+                                "title":title,
                                 "caption":caption,
                             },
                             success: function(response) {
@@ -300,6 +313,7 @@
                                 method: "POST", // First change type to method here
                                 data:{
                                     "youTube":convertToEmbedUrl($("#youtubeLink").val()),
+                                    "title":$("#titleY").val(),
                                     "caption":$("#captionY").val(),
                                 },
                                 success: function(response) {
@@ -311,6 +325,7 @@
                                 url: "/api/galeri/",
                                 method: "POST", // First change type to method here
                                 data:{
+                                    "title":$("#title").val(),
                                     "caption":$("#caption").val(),
                                 },
                                 success: function(response) {

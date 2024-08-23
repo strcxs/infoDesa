@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/login', function () {
+    return view('auth/login');
+})->name("login");
+
 Route::get('/admin', function () {
     return view('admin/admin');
 })->name("admin");
@@ -48,4 +52,5 @@ Route::get('/produk', function () {
     return view('umkm');
 })->name("produk");
 
-
+// routes/web.php
+Route::get('/download/siakad', [App\Http\Controllers\downloadController::class, 'download'])->name('download.pdf');

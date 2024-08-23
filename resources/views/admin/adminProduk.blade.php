@@ -63,8 +63,12 @@
                         <input type="text" class="form-control" id="productName" name="productName" required>
                     </div>
                     <div class="mb-3">
-                        <label for="productLink" class="form-label">Link Produk / Nomor Hp:</label>
-                        <input type="url" class="form-control" id="productLink" name="productLink" required>
+                        <label for="productTelp" class="form-label">Telp Produk</label>
+                        <input type="text" class="form-control" id="productTelp" name="productTelp" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="productLink" class="form-label">Link Produk</label>
+                        <input type="text" class="form-control" id="productLink" name="productLink" required>
                     </div>
                     <div class="mb-3">
                         <label for="productImages" class="form-label">Gambar Produk:</label>
@@ -77,12 +81,13 @@
                         <tr>
                             <th>ID</th>
                             <th>Nama Produk</th>
+                            <th>No Telp</th>
                             <th>Link Produk</th>
                             <th>Gambar Produk</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tbody">
                         <!-- Data Produk akan ditambahkan di sini oleh JavaScript -->
                     </tbody>
                 </table>
@@ -100,6 +105,10 @@
                                     <div class="mb-3">
                                         <label for="editProductName" class="form-label">Nama Produk:</label>
                                         <input type="text" class="form-control" id="editProductName" name="productName" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="editProductTelp" class="form-label">Telp Produk:</label>
+                                        <input type="text" class="form-control" id="editProductTelp" name="productTelp" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="editProductLink" class="form-label">Link Produk:</label>
@@ -130,12 +139,23 @@
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script>
         // $('#tabel').DataTable();
-        function uploadFiles(productId,number) {
-            var files = $('#editProductImages')[0].files;
-            
-            var fileData = new FormData();
-            fileData.append('productImages[]', files[number]);
+        function uploadFiles(productId,number,bool) {
+            var fileData = null;
+            var max = null;
+            if (bool) {
+                var files = $('#productImages')[0].files;
+                max = files.length;
 
+                var fileData = new FormData();
+                fileData.append('productImages[]', files[number]);
+            }else{
+                var files = $('#editProductImages')[0].files;
+                max = files.length;
+                
+                var fileData = new FormData();
+                fileData.append('productImages[]', files[number]);
+            }
+            
             $.ajax({
                 url: `/api/produkImg/${productId}`, // Pastikan endpoint sesuai
                 method: 'POST',
@@ -143,7 +163,10 @@
                 contentType: false,
                 processData: false,
                 success: function() {
-                    console.log('File uploaded successfully!');
+                    if (number+1 == max) {
+                        console.log('File uploaded successfully!');
+                        window.location.reload();
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.error('Error uploading file:', error);
@@ -157,15 +180,17 @@
                     url: "/api/produk",
                     method: 'GET',
                     success: function(products) {
-                        const tableBody = $('#productsTable tbody');
-                        tableBody.empty(); // Bersihkan tabel sebelum menambahkan data baru
-
                         products.forEach(product => {
-                            const row = $(`
+                            var link = `<a href="${product.link}" target="_blank">link</a>`;
+                            if (product.link == "-") {
+                                link = "-";
+                            }
+                            $('tbody').append(`
                                 <tr>
                                     <td>${product.id}</td>
                                     <td>${product.nama}</td>
-                                    <td><a href="${product.link}" target="_blank">${product.link}</a></td>
+                                    <td>${product.telp}</td>
+                                    <td>${link}</td>
                                     <td>
                                         <div id="images-${product.id}" class="d-flex">
                                             ${product.data_image.map(img => `
@@ -176,19 +201,26 @@
                                             `).join('')}
                                         </div>
                                     </td>
-                                    <td><button class="btn btn-warning btn-sm" onclick="editProduct(${product.id})">Edit</button></td>
-                                    <td><button class="btn btn-danger btn-sm" onclick="deleteProduct(${product.id})">Delete</button></td>
+                                    <td><button class="btn btn-warning btn-sm m-1" onclick="editProduct(${product.id})">Edit</button><button class="btn btn-danger btn-sm" onclick="deleteProduct(${product.id})">Delete</button></td>
                                 </tr>
                             `);
-                            tableBody.append(row);
                         });
+                        $('#productsTable').DataTable();
                     },
                     error: function(xhr, status, error) {
                         console.error('Error fetching products:', error);
                     }
                 });
             }
-
+            window.deleteProduct = function(productId) {
+                $.ajax({
+                    url: `${'/api/produk'}/${productId}`,
+                    method: 'DELETE',
+                    success: function(response) {
+                        window.location.reload();
+                    }
+                });
+            };
             // Fungsi untuk menangani edit produk
             window.editProduct = function(productId) {
                 $.ajax({
@@ -196,6 +228,7 @@
                     method: 'GET',
                     success: function(product) {
                         $('#editProductName').val(product.nama);
+                        $('#editProductTelp').val(product.telp);
                         $('#editProductLink').val(product.link);
                         $('#editProductId').val(productId);
 
@@ -237,6 +270,73 @@
                 }
             };
 
+
+            ///
+            $('#productForm').on('submit', function(event) {
+                event.preventDefault();
+                var formData = new FormData();
+                var files = $('#productImages')[0].files;
+                
+                if (files.length === 0) {
+                    $.ajax({
+                        url: `/api/produk/`,
+                        method: 'POST',
+                        data: {
+                            "nama":$("#productName").val(),
+                            "deskripsi":"-",
+                            "telp":$("#productTelp").val(),
+                            "link":$("#productLink").val()
+                        },
+                        success: function() {
+                            window.location.reload();
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error updating product:', error);
+                        }
+                    });
+                }else{
+                    $.each(files, function(i, file) {
+                        formData.append('productImages[]', file);
+                    });
+                    
+                    $.ajax({
+                        url: `/api/produk/`,
+                        method: 'POST',
+                        data: {
+                            "nama":$("#productName").val(),
+                            "deskripsi":"-",
+                            "telp":$("#productTelp").val(),
+                            "link":$("#productLink").val()
+                        },
+                        success: function(response) {
+                            ///
+                            var i = 0;
+                            console.log(response);
+                            
+                            formData.forEach(function(value, key) {
+                                $.ajax({
+                                    url: `${'/api/produkImg'}/`,
+                                    method: 'POST',
+                                    data: {
+                                        "id_produk":response.id,
+                                    },
+                                    success: function(responsex){
+                                        uploadFiles(responsex.id,i,true);
+                                        i++;
+                                    }
+                                });
+                                
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error updating product:', error);
+                        }
+                    });
+                }
+            });
+            ///
+
+
             // Tangani pengiriman form edit produk
             $('#editProductForm').on('submit', function(event) {
                 event.preventDefault();
@@ -250,11 +350,10 @@
                         data: {
                             "nama":$("#editProductName").val(),
                             "deskripsi":"-",
+                            "telp":$("#editProductelp").val(),
                             "link":$("#editProductLink").val()
                         },
                         success: function() {
-                            alert('Produk berhasil diperbarui!');
-                            $('#editProductModal').modal('hide');
                             window.location.reload();
                         },
                         error: function(xhr, status, error) {
@@ -273,6 +372,7 @@
                     data: {
                         "nama":$("#editProductName").val(),
                         "deskripsi":"-",
+                        "telp":$("#editProductTelp").val(),
                         "link":$("#editProductLink").val()
                     },
                     success: function(response) {
@@ -286,15 +386,13 @@
                                     "id_produk":response.id,
                                 },
                                 success: function(responsex){
-                                    uploadFiles(responsex.id,i);
+                                    uploadFiles(responsex.id,i,false);
                                     i++;
                                 }
                             });
                             
                         });
-                        
-                        alert('Produk berhasil diperbarui!');
-                        window.location.reload();
+                        // window.location.reload();
                     },
                     error: function(xhr, status, error) {
                         console.error('Error updating product:', error);
