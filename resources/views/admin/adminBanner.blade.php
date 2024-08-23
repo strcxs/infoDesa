@@ -103,17 +103,18 @@
                 cancelButtonText: 'No, cancel!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Swal.fire(
-                        'Deleted!',
-                        'Delete successfully.',
-                        'success'
-                    );
-                    // coding
                     $.ajax({
                         url: "/api/banner/"+id,
                         method: "DELETE", // First change type to method here
                         success: function(response) {
-                            window.location.reload();
+                            Swal.fire({
+                                title: 'Delete Success',
+                                text: '',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                window.location.reload();
+                            });
                         }
                     });
                     
@@ -139,12 +140,6 @@
                     cancelButtonText: 'No, cancel!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire(
-                            'Add New Baner!',
-                            'success add new banner.',
-                            'success'
-                        );
-                        // coding
                         var file = $('#fileUpload').prop('files')[0];
                         var images = new FormData();
                         images.append('image', file);
@@ -156,7 +151,14 @@
                             contentType: false,
                             data:images,
                             success: function(response) {
-                                window.location.reload();
+                                Swal.fire({
+                                    title: 'success add new banner',
+                                    text: '',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    window.location.reload();
+                                });
                             }
                         });
                         

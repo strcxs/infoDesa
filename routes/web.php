@@ -37,6 +37,12 @@ Route::get('/admin/banner', function () {
 Route::get('/admin/produk', function () {
     return view('admin/adminProduk');
 })->name("adminProduk");
+Route::get('/admin/atraksi', function () {
+    return view('admin/adminAtraksi');
+})->name("adminAtraksi");
+Route::get('/admin/change', function () {
+    return view('admin/password');
+})->name("change");
 
 
 Route::get('/', function () {
@@ -51,6 +57,9 @@ Route::get('/struktur', function () {
 Route::get('/produk', function () {
     return view('umkm');
 })->name("produk");
+Route::get('/atraksi', function () {
+    return view('atraksi');
+})->name("atraksi");
 
 // routes/web.php
 Route::get('/download/siakad', [App\Http\Controllers\downloadController::class, 'download'])->name('download.pdf');

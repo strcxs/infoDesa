@@ -56,34 +56,34 @@
 
             <!-- Content -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-4 content">
-                <h2>Pengaturan UMKM</h2>
-                <form id="productForm" class="mb-4">
+                <h2>Pengaturan Atraksi</h2>
+                <form id="atraksiForm" class="mb-4">
                     <div class="mb-3">
-                        <label for="productName" class="form-label">Nama Produk:</label>
-                        <input type="text" class="form-control" id="productName" name="productName" required>
+                        <label for="atraksiName" class="form-label">Nama Atraksi:</label>
+                        <input type="text" class="form-control" id="atraksiName" name="atraksiName" required>
                     </div>
                     <div class="mb-3">
-                        <label for="productTelp" class="form-label">Telp Produk</label>
-                        <input type="text" class="form-control" id="productTelp" name="productTelp" required>
+                        <label for="atraksiInstagram" class="form-label">Link Instagram Atraksi</label>
+                        <input type="text" class="form-control" id="atraksiInstagram" name="atraksiInstagram" required>
                     </div>
                     <div class="mb-3">
-                        <label for="productLink" class="form-label">Link Produk</label>
-                        <input type="text" class="form-control" id="productLink" name="productLink" required>
+                        <label for="atraksiMaps" class="form-label">Link Maps Atraksi</label>
+                        <input type="text" class="form-control" id="atraksiMaps" name="atraksiMaps" required>
                     </div>
                     <div class="mb-3">
-                        <label for="productImages" class="form-label">Gambar Produk:</label>
-                        <input type="file" class="form-control" id="productImages" name="productImages[]" multiple accept="image/*">
+                        <label for="atraksiImages" class="form-label">Gambar Atraksi:</label>
+                        <input type="file" class="form-control" id="atraksiImages" name="atraksiImages[]" multiple accept="image/*">
                     </div>
-                    <button type="submit" class="btn btn-primary">Kirim</button>
+                    <button type="submit" class="btn btn-primary">Buat Baru</button>
                 </form>
-                <table class="table table-striped" id="productsTable">
+                <table class="table table-striped" id="atraksiTable">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Nama Produk</th>
-                            <th>No Telp</th>
-                            <th>Link Produk</th>
-                            <th>Gambar Produk</th>
+                            <th>Instagram</th>
+                            <th>Maps</th>
+                            <th>Gambar Atraksi</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -93,33 +93,33 @@
                 </table>
             </main>
             <div id="modal">
-                <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+                <div class="modal fade" id="editAtraksiModal" tabindex="-1" aria-labelledby="editAtraksiModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="editProductModalLabel">Edit Produk</h5>
+                                <h5 class="modal-title" id="editAtraksiModalLabel">Edit Atraksi</h5>
                                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">&times;</button>
                             </div>
                             <div class="modal-body">
-                                <form id="editProductForm">
+                                <form id="editAtraksiForm">
                                     <div class="mb-3">
-                                        <label for="editProductName" class="form-label">Nama Produk:</label>
-                                        <input type="text" class="form-control" id="editProductName" name="productName" required>
+                                        <label for="editAtraksiName" class="form-label">Nama Atraksi:</label>
+                                        <input type="text" class="form-control" id="editAtraksiName" name="editAtraksiName" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="editProductTelp" class="form-label">Telp Produk:</label>
-                                        <input type="text" class="form-control" id="editProductTelp" name="productTelp" required>
+                                        <label for="editAtraksiInstagram" class="form-label">Instagram:</label>
+                                        <input type="text" class="form-control" id="editAtraksiInstagram" name="editatraksiInstagram" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="editProductLink" class="form-label">Link Produk:</label>
-                                        <input type="text" class="form-control" id="editProductLink" name="productLink" required>
+                                        <label for="editAtraksiMaps" class="form-label">Maps:</label>
+                                        <input type="text" class="form-control" id="editAtraksiMaps" name="editatraksiMaps" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="editProductImages" class="form-label">Gambar Produk:</label>
+                                        <label for="editAtraksiImages" class="form-label">Gambar Atraksi:</label>
                                         <div id="currentImages" class="d-flex flex-wrap mb-2"></div>
-                                        <input type="file" class="form-control" id="editProductImages" name="productImages[]" multiple accept="image/*">
+                                        <input type="file" class="form-control" id="editAtraksiImages" name="atraksiImages[]" multiple accept="image/*">
                                     </div>
-                                    <input type="hidden" id="editProductId" name="productId">
+                                    <input type="hidden" id="editAtraksiId" name="productId">
                                     <button type="submit" class="btn btn-primary">Simpan</button>
                                 </form>
                             </div>
@@ -143,20 +143,21 @@
             var fileData = null;
             var max = null;
             if (bool) {
-                var files = $('#productImages')[0].files;
+                var files = $('#atraksiImages')[0].files;
                 max = files.length;
 
                 var fileData = new FormData();
-                fileData.append('productImages[]', files[number]);
+                fileData.append('atraksiImages[]', files[number]);
             }else{
-                var files = $('#editProductImages')[0].files;
+                var files = $('#editAtraksiImages')[0].files;
                 max = files.length;
                 
                 var fileData = new FormData();
-                fileData.append('productImages[]', files[number]);
+                fileData.append('atraksiImages[]', files[number]);
             }
+            
             $.ajax({
-                url: `/api/produkImg/${productId}`, // Pastikan endpoint sesuai
+                url: `/api/atraksiImg/${productId}`, // Pastikan endpoint sesuai
                 method: 'POST',
                 data: fileData,
                 contentType: false,
@@ -164,7 +165,7 @@
                 success: function() {
                     if (number+1 == max) {
                         Swal.fire({
-                            title: 'File uploaded successfully!',
+                            title: 'Update Berhasil',
                             text: '',
                             icon: 'success',
                             confirmButtonText: 'OK'
@@ -182,25 +183,29 @@
         $(document).ready(function(){
             function loadProducts() {
                 $.ajax({
-                    url: "/api/produk",
+                    url: "/api/atraksi",
                     method: 'GET',
                     success: function(products) {
                         products.forEach(product => {
-                            var link = `<a href="${product.link}" target="_blank">link</a>`;
-                            if (product.link == "-") {
+                            var link = `<a href="${product.medsos}" target="_blank">Instagram</a>`;
+                            var maps = `<a href="${product.gmaps}" target="_blank">Maps</a>`;
+                            if (product.medsos == "-") {
                                 link = "-";
+                            }
+                            if (product.gmaps == "-") {
+                                maps = "-";
                             }
                             $('tbody').append(`
                                 <tr>
                                     <td>${product.id}</td>
                                     <td>${product.nama}</td>
-                                    <td>${product.telp}</td>
+                                    <td>${maps}</td>
                                     <td>${link}</td>
                                     <td>
                                         <div id="images-${product.id}" class="d-flex">
                                             ${product.data_image.map(img => `
                                                 <div class="position-relative me-2 mb-2">
-                                                    <img style="height:100px" src="{{asset('storage/images/produk/${img.produk_img}')}}" alt="Gambar ${img.produk_img}" class="img-thumbnail">
+                                                    <img style="height:100px" src="{{asset('storage/images/atraksi/${img.atraksi_img}')}}" alt="Gambar ${img.atraksi_img}" class="img-thumbnail">
                                                     <button type="button" class="remove-img-btn" onclick="removeImage(${product.id}, ${img.id})">&times;</button>
                                                 </div>
                                             `).join('')}
@@ -210,7 +215,7 @@
                                 </tr>
                             `);
                         });
-                        $('#productsTable').DataTable();
+                        $('#atraksiTable').DataTable();
                     },
                     error: function(xhr, status, error) {
                         console.error('Error fetching products:', error);
@@ -220,7 +225,7 @@
             window.deleteProduct = function(productId) {
                 Swal.fire({
                     title: 'Are you sure?',
-                    text: "Delete Product",
+                    text: "Delete Atraksi",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -230,7 +235,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: `${'/api/produk'}/${productId}`,
+                            url: `${'/api/atraksi'}/${productId}`,
                             method: 'DELETE',
                             success: function(response) {
                                 Swal.fire({
@@ -249,27 +254,27 @@
             // Fungsi untuk menangani edit produk
             window.editProduct = function(productId) {
                 $.ajax({
-                    url: `${'/api/produk'}/${productId}`,
+                    url: `${'/api/atraksi'}/${productId}`,
                     method: 'GET',
                     success: function(product) {
-                        $('#editProductName').val(product.nama);
-                        $('#editProductTelp').val(product.telp);
-                        $('#editProductLink').val(product.link);
-                        $('#editProductId').val(productId);
+                        $('#editAtraksiName').val(product.nama);
+                        $('#editAtraksiInstagram').val(product.medsos);
+                        $('#editAtraksiMaps').val(product.gmaps);
+                        $('#editAtraksiId').val(productId);
 
                         const imageContainer = $('#currentImages');
                         imageContainer.empty();
                         product.data_image.forEach(img => {
                             const imgDiv = $(`
                                 <div class="position-relative me-2 mb-2">
-                                    <img style="height:60px" src="{{asset('storage/images/produk/${img.produk_img}')}}" alt="Gambar ${img.produk_img}" class="img-thumbnail">
+                                    <img style="height:60px" src="{{asset('storage/images/atraksi/${img.atraksi_img}')}}" alt="Gambar ${img.atraksi_img}" class="img-thumbnail">
                                     <button type="button" class="remove-img-btn" onclick="removeImage(${productId}, ${img.id})">&times;</button>
                                 </div>
                             `);
                             imageContainer.append(imgDiv);
                         });
 
-                        const modal = new bootstrap.Modal($('#editProductModal')[0]);
+                        const modal = new bootstrap.Modal($('#editAtraksiModal')[0]);
                         modal.show();
                     },
                     error: function(xhr, status, error) {
@@ -281,8 +286,8 @@
             // Fungsi untuk menghapus gambar
             window.removeImage = function(productId, imageId) {
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: "Update Dashboard",
+                title: 'Are you sure?',
+                    text: "Delete Image",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -292,7 +297,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: `/api/produkImg/${imageId}`,
+                            url: `/api/atraksiImg/${imageId}`,
                             method: 'DELETE',
                             success: function() {
                                 Swal.fire({
@@ -312,13 +317,13 @@
                 })
             };
 
-
+ 
             ///
-            $('#productForm').on('submit', function(event) {
+            $('#atraksiForm').on('submit', function(event) {
                 event.preventDefault();
                 Swal.fire({
                     title: 'Are you sure?',
-                    text: "Add New Product ?",
+                    text: "Add New Atraksi",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -328,21 +333,20 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         var formData = new FormData();
-                        var files = $('#productImages')[0].files;
+                        var files = $('#atraksiImages')[0].files;
                         
                         if (files.length === 0) {
                             $.ajax({
-                                url: `/api/produk/`,
+                                url: `/api/atraksi/`,
                                 method: 'POST',
                                 data: {
-                                    "nama":$("#productName").val(),
-                                    "deskripsi":"-",
-                                    "telp":$("#productTelp").val(),
-                                    "link":$("#productLink").val()
+                                    "nama":$("#atraksiName").val(),
+                                    "medsos":$("#atraksiInstagram").val(),
+                                    "gmaps":$("#atraksiMaps").val()
                                 },
                                 success: function() {
                                     Swal.fire({
-                                        title: 'Add Success',
+                                        title: 'Success add New Atraksi',
                                         text: '',
                                         icon: 'success',
                                         confirmButtonText: 'OK'
@@ -356,17 +360,16 @@
                             });
                         }else{
                             $.each(files, function(i, file) {
-                                formData.append('productImages[]', file);
+                                formData.append('atraksiImages[]', file);
                             });
                             
                             $.ajax({
-                                url: `/api/produk/`,
+                                url: `/api/atraksi/`,
                                 method: 'POST',
                                 data: {
-                                    "nama":$("#productName").val(),
-                                    "deskripsi":"-",
-                                    "telp":$("#productTelp").val(),
-                                    "link":$("#productLink").val()
+                                    "nama":$("#atraksiName").val(),
+                                    "medsos":$("#atraksiInstagram").val(),
+                                    "gmaps":$("#atraksiMaps").val()
                                 },
                                 success: function(response) {
                                     ///
@@ -375,16 +378,17 @@
                                     
                                     formData.forEach(function(value, key) {
                                         $.ajax({
-                                            url: `${'/api/produkImg'}/`,
+                                            url: `${'/api/atraksiImg'}/`,
                                             method: 'POST',
                                             data: {
-                                                "id_produk":response.id,
+                                                "id_atraksi":response.id,
                                             },
                                             success: function(responsex){
                                                 uploadFiles(responsex.id,i,true);
                                                 i++;
                                             }
                                         });
+                                        
                                     });
                                 },
                                 error: function(xhr, status, error) {
@@ -399,86 +403,64 @@
 
 
             // Tangani pengiriman form edit produk
-            $('#editProductForm').on('submit', function(event) {
+            $('#editAtraksiForm').on('submit', function(event) {
                 event.preventDefault();
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "Update Dashboard",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, Update',
-                    cancelButtonText: 'No, cancel!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        var formData = new FormData();
-                        var files = $('#editProductImages')[0].files;
-                        
-                        if (files.length === 0) {
+                var formData = new FormData();
+                var files = $('#editAtraksiImages')[0].files;
+                
+                if (files.length === 0) {
+                    $.ajax({
+                        url: `${'/api/atraksi'}/${$('#editAtraksiId').val()}`,
+                        method: 'PUT',
+                        data: {
+                            "nama":$("#editAtraksiName").val(),
+                            "medsos":$("#editAtraksiInstagram").val(),
+                            "gmaps":$("#editAtraksiMaps").val()
+                        },
+                        success: function() {
+                            window.location.reload();
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error updating product:', error);
+                        }
+                    });
+                }
+
+                $.each(files, function(i, file) {
+                    formData.append('atraksiImages[]', file);
+                });
+
+                $.ajax({
+                    url: `${'/api/atraksi'}/${$('#editAtraksiId').val()}`,
+                    method: 'PUT',
+                    data: {
+                        "nama":$("#editAtraksiName").val(),
+                        "medsos":$("#editAtraksiInstagram").val(),
+                        "gmaps":$("#editAtraksiMaps").val()
+                    },
+                    success: function(response) {
+                        ///
+                        var i = 0;
+                        formData.forEach(function(value, key) {
                             $.ajax({
-                                url: `${'/api/produk'}/${$('#editProductId').val()}`,
-                                method: 'PUT',
+                                url: `${'/api/atraksiImg'}/`,
+                                method: 'POST',
                                 data: {
-                                    "nama":$("#editProductName").val(),
-                                    "deskripsi":"-",
-                                    "telp":$("#editProductelp").val(),
-                                    "link":$("#editProductLink").val()
+                                    "id_atraksi":response.id,
                                 },
-                                success: function() {
-                                    Swal.fire({
-                                        title: 'Update Berhasil',
-                                        text: '',
-                                        icon: 'success',
-                                        confirmButtonText: 'OK'
-                                    }).then((result) => {
-                                        window.location.reload();
-                                    });
-                                },
-                                error: function(xhr, status, error) {
-                                    console.error('Error updating product:', error);
+                                success: function(responsex){
+                                    uploadFiles(responsex.id,i,false);
+                                    i++;
                                 }
                             });
-                        }
-        
-                        $.each(files, function(i, file) {
-                            formData.append('productImages[]', file);
+                            
                         });
-        
-                        $.ajax({
-                            url: `${'/api/produk'}/${$('#editProductId').val()}`,
-                            method: 'PUT',
-                            data: {
-                                "nama":$("#editProductName").val(),
-                                "deskripsi":"-",
-                                "telp":$("#editProductTelp").val(),
-                                "link":$("#editProductLink").val()
-                            },
-                            success: function(response) {
-                                ///
-                                var i = 0;
-                                formData.forEach(function(value, key) {
-                                    $.ajax({
-                                        url: `${'/api/produkImg'}/`,
-                                        method: 'POST',
-                                        data: {
-                                            "id_produk":response.id,
-                                        },
-                                        success: function(responsex){
-                                            uploadFiles(responsex.id,i,false);
-                                            i++;
-                                        }
-                                    });
-                                    
-                                });
-                                // window.location.reload();
-                            },
-                            error: function(xhr, status, error) {
-                                console.error('Error updating product:', error);
-                            }
-                        });
+                        // window.location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error updating product:', error);
                     }
-                })
+                });
             });
             loadProducts();
         });
