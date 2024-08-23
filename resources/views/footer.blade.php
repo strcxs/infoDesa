@@ -48,6 +48,6 @@
         </div>
     </div>
     <div class="container mt-3 text-center">
-        <p>&copy; 2024 Nurtanio Bandung University KKNMT Kertawangi. All rights reserved.</p>
+        <p>&copy; 2024 Nurtanio Bandung University KKNMT Kertawangi.</p>
     </div>
 </footer>

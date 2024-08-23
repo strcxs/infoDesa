@@ -28,10 +28,13 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         '/produkImg' => 'imgController',
         '/geografis' => 'geoController',
         '/anggaran' => 'anggaranController',
+        '/atraksi' => 'atraksiController',
+        '/atraksiImg' => 'atraksiImgController',
     ]);
     Route::post('/dashboard/{id}', 'dashboardController@update');
     Route::post('/galeri/{id}', 'galeriController@update');
     Route::post('/struktur/{id}', 'strukturController@update');
     Route::post('/banner/{id}', 'bannerController@update');
     Route::post('/produkImg/{id}', 'imgController@update');
+    Route::post('/atraksiImg/{id}', 'atraksiImgController@update');
 });

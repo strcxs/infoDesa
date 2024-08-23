@@ -49,6 +49,10 @@
         background-color: #50A309;
         color: #ffffff;
     }
+    .btn-instagram{
+            background-color: #3897f0;
+            color: #ffffff;
+        }
     .navbar-brand .text-custom p {
         margin-bottom: -40px;
     }
@@ -96,7 +100,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item  text-dark" href="{{ route('produk') }}">Produk UMKM</a>
-                    <a class="dropdown-item  text-dark" href="#">Atraksi</a>
+                    <a class="dropdown-item  text-dark" href="{{ route('atraksi') }}">Atraksi</a>
                 </div>
             </li>
         </ul>

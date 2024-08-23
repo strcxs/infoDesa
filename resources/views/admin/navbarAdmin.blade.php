@@ -59,6 +59,12 @@
                     UMKM
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ request()->routeIs('adminAtraksi') ? 'active' : '' }}" href="{{ route('adminAtraksi') }}">
+                    <i class="fas fa-dungeon"></i>
+                    Atraksi
+                </a>
+            </li>
         </ul>
     </div>
 </nav>

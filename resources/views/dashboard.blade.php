@@ -219,7 +219,7 @@
             </div>
             <!-- Card 4: Kegiatan Desa -->
             <div class="col-6 col-md-3">
-                <div id="card" class="card text-center" data-target="galeri">
+                <div id="card" class="card text-center" data-target="galerix">
                     <div class="card-body">
                         <i class="fas fa-calendar-day fa-3x mb-3"></i>
                         <h5 class="card-title">Kegiatan Desa</h5>
@@ -256,7 +256,7 @@
             </div>
         </div>
     </div>
-    <div class="container mt-5">
+    <div class="container mt-5" id="umkm">
         <div class="text-center mb-4">
             <hr class="custom-hr">
             <h2 class="text-content" style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;color: #50A309">UMKM Desa Kertawangi</h2>
@@ -270,7 +270,7 @@
         </div>
     </div>
     <hr class="custom-hr">
-    <div class="container mt-5">
+    <div class="container mt-5" id="galerix">
         <div class="row">
             <div class="col-12 col-md-4 col-lg-4 mb-4 d-flex align-items-center text-center">
                 <p>
@@ -290,6 +290,21 @@
             </div>
         </div>
     </div>
+    {{--  --}}
+    <div class="container mt-5">
+        <div class="text-center mb-4">
+            <hr class="custom-hr">
+            <h2 class="text-content" style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;color: #50A309">Atraksi Desa Kertawangi</h2>
+            
+        </div>
+        <div class="row" id="content-atraksi">
+            
+        </div>
+        <div class="text-center">
+            <a href="{{ route('atraksi') }}">Tampilkan lebih banyak atraksi..</a>
+        </div>
+    </div>
+    {{--  --}}
     <div class="container mt-5" id="keuangan-desa">
         <h2 style="color: #50A309;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">Keuangan Desa</h2>
         <div class="row">
@@ -474,11 +489,6 @@
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('click', () => {
                 const targetId = card.getAttribute('data-target');
-                if (targetId === 'galeri') {
-                    return window.location = window.location.origin+'/galeri';
-                }else if (targetId === 'umkm') {
-                    return window.location = window.location.origin+'/produk';
-                } 
                 const targetElement = document.getElementById(targetId);
                 targetElement.scrollIntoView({ behavior: 'smooth' });
 
@@ -557,6 +567,84 @@
             }
         }
         $(document).ready(function(){
+            $.ajax({
+                url: "/api/atraksi/",
+                method: "GET", // First change type to method here
+                success: function(response) {
+                    response.forEach((data,index) => {
+                        medsos = null;
+                        maps = null;
+                        
+                        if (data.medsos !=="-") {
+                            medsos = `<a href="${data.medsos}" class="btn btn-instagram"><i class="fab fa-instagram"></i> Instagram</a>`;
+                        }else{
+                            medsos = '<a href="#" class="btn btn-instagram disabled"><i class="fab fa-instagram"></i> Instagram</a>';
+                        } 
+
+                        if(data.gmaps !== "-"){
+                            maps = '<a href="'+data.gmaps+'" id="button" class="btn btn-custom mb-2"><i class="fa-solid fa-location-dot"></i> Maps</a>';
+                        } else{
+                            maps = '<a href="#" id="button" class="btn btn-custom disabled mb-2"><i class="fa-solid fa-location-dot"></i> Maps</a>';
+                        }
+                        $('#content-atraksi').append(
+                            '<div class="col-6 col-lg-4 mb-4">' +
+                            '    <div class="card" id="umkm">' +
+                            '        <div id="carouselExampleControls'+index+'" class="carousel slide">' +
+                            '            <div id="produk-img-'+data.id+'" class="carousel-inner">' +
+                            '            </div>' +
+                            '            <a class="carousel-control-prev" href="#carouselExampleControls'+index+'" role="button" data-slide="prev">' +
+                            '                <span class="carousel-control-prev-icon" aria-hidden="true"></span>' +
+                            '                <span class="sr-only">Previous</span>' +
+                            '            </a>' +
+                            '            <a class="carousel-control-next" href="#carouselExampleControls'+index+'" role="button" data-slide="next">' +
+                            '                <span class="carousel-control-next-icon" aria-hidden="true"></span>' +
+                            '                <span class="sr-only">Next</span>' +
+                            '            </a>' +
+                            '        </div>' +
+                            '        <div class="card-body">' +
+                            '            <p class="card-title"><strong>'+data.nama+'</strong></p>' +
+                            // '            <div id="button">'+
+                                            maps +
+                                            medsos+
+                            // '            </div>'+
+                            '        </div>' +
+                            '    </div>' +
+                            '</div>'
+                        );
+                        if (data.data_image.length != 0) {
+                            data.data_image.forEach((image,index) => {
+                                if (image.atraksi_img != null) {
+                                    if (index == 0) {
+                                        $("#produk-img-"+data.id+"").append(
+                                            '<div class="carousel-item active">' +
+                                            '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/atraksi/${image.atraksi_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
+                                            '</div>' 
+                                        );
+                                    }else{
+                                        $("#produk-img-"+data.id+"").append(
+                                            '<div class="carousel-item">' +
+                                            '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/atraksi/${image.atraksi_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
+                                            '</div>' 
+                                        );
+                                    }
+                                }else{
+                                    $("#produk-img-"+data.id+"").append(
+                                        '<div class="carousel-item">' +
+                                        '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/atraksi/${image.atraksi_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
+                                        '</div>' 
+                                    );
+                                }
+                            });
+                        }else{
+                            $("#produk-img-"+data.id+"").append(
+                                '<div class="carousel-item active">' +
+                                '    <img style="height: 200px; object-fit: cover" src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="d-block w-100" alt="Produk 1">' +
+                                '</div>' 
+                            );
+                        }
+                    });
+                }
+            });
             $.ajax({
                 url: "/api/galeri/",
                 method: "GET", // First change type to method here
@@ -647,14 +735,14 @@
                             $('#content-produk').append(
                                 '<div class="col-6 col-lg-4 mb-3">' +
                                 '    <div class="card" id="umkm">' +
-                                '        <div id="carouselExampleControls'+index+'" class="carousel slide">' +
+                                '        <div id="pr-carouselExampleControls'+index+'" class="carousel slide">' +
                                 '            <div id="produk-img-'+data.id+'" class="carousel-inner">' +
                                 '            </div>' +
-                                '            <a class="carousel-control-prev" href="#carouselExampleControls'+index+'" role="button" data-slide="prev">' +
+                                '            <a class="carousel-control-prev" href="#pr-carouselExampleControls'+index+'" role="button" data-slide="prev">' +
                                 '                <span class="carousel-control-prev-icon" aria-hidden="true"></span>' +
                                 '                <span class="sr-only">Previous</span>' +
                                 '            </a>' +
-                                '            <a class="carousel-control-next" href="#carouselExampleControls'+index+'" role="button" data-slide="next">' +
+                                '            <a class="carousel-control-next" href="#pr-carouselExampleControls'+index+'" role="button" data-slide="next">' +
                                 '                <span class="carousel-control-next-icon" aria-hidden="true"></span>' +
                                 '                <span class="sr-only">Next</span>' +
                                 '            </a>' +
@@ -720,11 +808,6 @@
                     $('#batas-selatan').text(response.batas_selatan);
                     $('#batas-timur').text(response.batas_timur);
                     $('#batas-barat').text(response.batas_barat);
-
-                    // $('#nama_desa').text(response.nama_desa);
-                    // $('#alamat_desa').text(response.alamat_desa);
-                    // $('#luas_desa').text(formatAngka(response.luas_desa)+" km²");
-                    // $('#jumlah_penduduk').text(formatAngka(response.jumlah_penduduk)+" Jiwa");
                 }
             });
             $.ajax({
@@ -771,9 +854,6 @@
                     $("#visi").text(response.visi);
                     $("#geografis").text(response.geografis);
                     $("#demografis").text(response.demografis);
-
-                    // $("#sejarah").text(minSplit(response.sejarah,50));
-                    // $("#more").text(maxSplit(response.sejarah,50));
                     
                     var misi = response.misi;
                     const points = misi.split('. ').filter(point => point.trim() !== '');
