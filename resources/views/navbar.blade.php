@@ -28,7 +28,7 @@
         padding: 0.5rem; /* Menambah padding pada toggle button */
     }
     .bg-custom{
-        background-color: #f67828;
+        background-color: #50A309;
         color: #ffffff;
     }
     
@@ -46,7 +46,7 @@
         margin-bottom: 1rem;
     }
     .btn-custom{
-        background-color: #f67828;
+        background-color: #50A309;
         color: #ffffff;
     }
     .navbar-brand .text-custom p {
@@ -79,6 +79,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item text-dark" href="{{ route('struktur') }}">Struktur Desa</a>
+                    <a class="dropdown-item text-dark" href="{{ route('struktur') }}">Struktur Karta Desa</a>
                 </div>
             </li>
             <li class="nav-item dropdown">

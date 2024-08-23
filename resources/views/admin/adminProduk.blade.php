@@ -63,7 +63,11 @@
                         <input type="text" class="form-control" id="productName" name="productName" required>
                     </div>
                     <div class="mb-3">
-                        <label for="productLink" class="form-label">Link Produk / Nomor Hp:</label>
+                        <label for="productTelp" class="form-label">Telp Produk</label>
+                        <input type="text" class="form-control" id="productTelp" name="productTelp" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="productLink" class="form-label">Link Produk</label>
                         <input type="text" class="form-control" id="productLink" name="productLink" required>
                     </div>
                     <div class="mb-3">
@@ -77,12 +81,13 @@
                         <tr>
                             <th>ID</th>
                             <th>Nama Produk</th>
+                            <th>No Telp</th>
                             <th>Link Produk</th>
                             <th>Gambar Produk</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tbody">
                         <!-- Data Produk akan ditambahkan di sini oleh JavaScript -->
                     </tbody>
                 </table>
@@ -100,6 +105,10 @@
                                     <div class="mb-3">
                                         <label for="editProductName" class="form-label">Nama Produk:</label>
                                         <input type="text" class="form-control" id="editProductName" name="productName" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="editProductTelp" class="form-label">Telp Produk:</label>
+                                        <input type="text" class="form-control" id="editProductTelp" name="productTelp" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="editProductLink" class="form-label">Link Produk:</label>
@@ -156,7 +165,7 @@
                 success: function() {
                     if (number+1 == max) {
                         console.log('File uploaded successfully!');
-                        // window.location.reload();
+                        window.location.reload();
                     }
                 },
                 error: function(xhr, status, error) {
@@ -171,15 +180,17 @@
                     url: "/api/produk",
                     method: 'GET',
                     success: function(products) {
-                        const tableBody = $('#productsTable tbody');
-                        tableBody.empty(); // Bersihkan tabel sebelum menambahkan data baru
-
                         products.forEach(product => {
-                            const row = $(`
+                            var link = `<a href="${product.link}" target="_blank">link</a>`;
+                            if (product.link == "-") {
+                                link = "-";
+                            }
+                            $('tbody').append(`
                                 <tr>
                                     <td>${product.id}</td>
                                     <td>${product.nama}</td>
-                                    <td><a href="${product.link}" target="_blank">${product.link}</a></td>
+                                    <td>${product.telp}</td>
+                                    <td>${link}</td>
                                     <td>
                                         <div id="images-${product.id}" class="d-flex">
                                             ${product.data_image.map(img => `
@@ -190,19 +201,26 @@
                                             `).join('')}
                                         </div>
                                     </td>
-                                    <td><button class="btn btn-warning btn-sm" onclick="editProduct(${product.id})">Edit</button></td>
-                                    <td><button class="btn btn-danger btn-sm" onclick="deleteProduct(${product.id})">Delete</button></td>
+                                    <td><button class="btn btn-warning btn-sm m-1" onclick="editProduct(${product.id})">Edit</button><button class="btn btn-danger btn-sm" onclick="deleteProduct(${product.id})">Delete</button></td>
                                 </tr>
                             `);
-                            tableBody.append(row);
                         });
+                        $('#productsTable').DataTable();
                     },
                     error: function(xhr, status, error) {
                         console.error('Error fetching products:', error);
                     }
                 });
             }
-
+            window.deleteProduct = function(productId) {
+                $.ajax({
+                    url: `${'/api/produk'}/${productId}`,
+                    method: 'DELETE',
+                    success: function(response) {
+                        window.location.reload();
+                    }
+                });
+            };
             // Fungsi untuk menangani edit produk
             window.editProduct = function(productId) {
                 $.ajax({
@@ -210,6 +228,7 @@
                     method: 'GET',
                     success: function(product) {
                         $('#editProductName').val(product.nama);
+                        $('#editProductTelp').val(product.telp);
                         $('#editProductLink').val(product.link);
                         $('#editProductId').val(productId);
 
@@ -265,6 +284,7 @@
                         data: {
                             "nama":$("#productName").val(),
                             "deskripsi":"-",
+                            "telp":$("#productTelp").val(),
                             "link":$("#productLink").val()
                         },
                         success: function() {
@@ -274,44 +294,45 @@
                             console.error('Error updating product:', error);
                         }
                     });
-                }
-
-                $.each(files, function(i, file) {
-                    formData.append('productImages[]', file);
-                });
-                
-                $.ajax({
-                    url: `/api/produk/`,
-                    method: 'POST',
-                    data: {
-                        "nama":$("#productName").val(),
-                        "deskripsi":"-",
-                        "link":$("#productLink").val()
-                    },
-                    success: function(response) {
-                        ///
-                        var i = 0;
-                        console.log(response);
-                        
-                        formData.forEach(function(value, key) {
-                            $.ajax({
-                                url: `${'/api/produkImg'}/`,
-                                method: 'POST',
-                                data: {
-                                    "id_produk":response.id,
-                                },
-                                success: function(responsex){
-                                    uploadFiles(responsex.id,i,true);
-                                    i++;
-                                }
-                            });
+                }else{
+                    $.each(files, function(i, file) {
+                        formData.append('productImages[]', file);
+                    });
+                    
+                    $.ajax({
+                        url: `/api/produk/`,
+                        method: 'POST',
+                        data: {
+                            "nama":$("#productName").val(),
+                            "deskripsi":"-",
+                            "telp":$("#productTelp").val(),
+                            "link":$("#productLink").val()
+                        },
+                        success: function(response) {
+                            ///
+                            var i = 0;
+                            console.log(response);
                             
-                        });
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error updating product:', error);
-                    }
-                });
+                            formData.forEach(function(value, key) {
+                                $.ajax({
+                                    url: `${'/api/produkImg'}/`,
+                                    method: 'POST',
+                                    data: {
+                                        "id_produk":response.id,
+                                    },
+                                    success: function(responsex){
+                                        uploadFiles(responsex.id,i,true);
+                                        i++;
+                                    }
+                                });
+                                
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error updating product:', error);
+                        }
+                    });
+                }
             });
             ///
 
@@ -329,6 +350,7 @@
                         data: {
                             "nama":$("#editProductName").val(),
                             "deskripsi":"-",
+                            "telp":$("#editProductelp").val(),
                             "link":$("#editProductLink").val()
                         },
                         success: function() {
@@ -350,6 +372,7 @@
                     data: {
                         "nama":$("#editProductName").val(),
                         "deskripsi":"-",
+                        "telp":$("#editProductTelp").val(),
                         "link":$("#editProductLink").val()
                     },
                     success: function(response) {

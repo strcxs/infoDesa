@@ -61,7 +61,7 @@
     @include('navbar')
     <div class="container mt-4">
         <h1 class="text-center mb-4">Galeri Kegiatan Desa Kertawangi</h1>
-        <p style="text-align: justify">Selamat datang di galeri kami! Di sini, Anda dapat melihat berbagai kegiatan dan acara yang telah berlangsung di Desa Kertawangi. Kami berharap galeri ini dapat memberikan gambaran yang lebih jelas tentang kehidupan dan budaya desa kami. Selamat menikmati!</p>
+        <p style="text-align: justify">Kami berkomitmen untuk mempererat hubungan antarwarga dan mempromosikan keunikan budaya lokal. Kami menyambut Anda untuk mengeksplorasi berbagai acara dan kegiatan yang mencerminkan kekayaan tradisi dan kehidupan sehari-hari di desa kami. Galeri ini dirancang untuk memberikan gambaran tentang semangat komunitas kami serta berbagai aktivitas yang dapat Anda temukan di sini. Selamat menikmati kunjungan Anda dan jangan ragu untuk bergabung dengan kami dalam merayakan kehidupan di Desa Kertawangi!</p>
         <div class="row" id="galeri" >
             
         </div>
