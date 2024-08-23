@@ -155,7 +155,6 @@
                 var fileData = new FormData();
                 fileData.append('productImages[]', files[number]);
             }
-            
             $.ajax({
                 url: `/api/produkImg/${productId}`, // Pastikan endpoint sesuai
                 method: 'POST',
@@ -164,8 +163,14 @@
                 processData: false,
                 success: function() {
                     if (number+1 == max) {
-                        console.log('File uploaded successfully!');
-                        window.location.reload();
+                        Swal.fire({
+                            title: 'File uploaded successfully!',
+                            text: '',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            window.location.reload();
+                        });
                     }
                 },
                 error: function(xhr, status, error) {
@@ -213,13 +218,33 @@
                 });
             }
             window.deleteProduct = function(productId) {
-                $.ajax({
-                    url: `${'/api/produk'}/${productId}`,
-                    method: 'DELETE',
-                    success: function(response) {
-                        window.location.reload();
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Delete Product",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Update',
+                    cancelButtonText: 'No, cancel!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `${'/api/produk'}/${productId}`,
+                            method: 'DELETE',
+                            success: function(response) {
+                                Swal.fire({
+                                    title: 'Delete Success',
+                                    text: '',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    window.location.reload();
+                                });
+                            }
+                        });
                     }
-                });
+                })
             };
             // Fungsi untuk menangani edit produk
             window.editProduct = function(productId) {
@@ -255,84 +280,120 @@
 
             // Fungsi untuk menghapus gambar
             window.removeImage = function(productId, imageId) {
-                if (confirm('Anda yakin ingin menghapus gambar ini?')) {
-                    $.ajax({
-                        url: `/api/produkImg/${imageId}`,
-                        method: 'DELETE',
-                        success: function() {
-                            alert('Gambar berhasil dihapus!');
-                            window.location.reload();
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Error deleting image:', error);
-                        }
-                    });
-                }
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Update Dashboard",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Update',
+                    cancelButtonText: 'No, cancel!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `/api/produkImg/${imageId}`,
+                            method: 'DELETE',
+                            success: function() {
+                                Swal.fire({
+                                    title: 'Delete Success',
+                                    text: '',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    window.location.reload();
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error deleting image:', error);
+                            }
+                        });
+                    }
+                })
             };
 
 
             ///
             $('#productForm').on('submit', function(event) {
                 event.preventDefault();
-                var formData = new FormData();
-                var files = $('#productImages')[0].files;
-                
-                if (files.length === 0) {
-                    $.ajax({
-                        url: `/api/produk/`,
-                        method: 'POST',
-                        data: {
-                            "nama":$("#productName").val(),
-                            "deskripsi":"-",
-                            "telp":$("#productTelp").val(),
-                            "link":$("#productLink").val()
-                        },
-                        success: function() {
-                            window.location.reload();
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Error updating product:', error);
-                        }
-                    });
-                }else{
-                    $.each(files, function(i, file) {
-                        formData.append('productImages[]', file);
-                    });
-                    
-                    $.ajax({
-                        url: `/api/produk/`,
-                        method: 'POST',
-                        data: {
-                            "nama":$("#productName").val(),
-                            "deskripsi":"-",
-                            "telp":$("#productTelp").val(),
-                            "link":$("#productLink").val()
-                        },
-                        success: function(response) {
-                            ///
-                            var i = 0;
-                            console.log(response);
-                            
-                            formData.forEach(function(value, key) {
-                                $.ajax({
-                                    url: `${'/api/produkImg'}/`,
-                                    method: 'POST',
-                                    data: {
-                                        "id_produk":response.id,
-                                    },
-                                    success: function(responsex){
-                                        uploadFiles(responsex.id,i,true);
-                                        i++;
-                                    }
-                                });
-                                
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Add New Product ?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Update',
+                    cancelButtonText: 'No, cancel!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var formData = new FormData();
+                        var files = $('#productImages')[0].files;
+                        
+                        if (files.length === 0) {
+                            $.ajax({
+                                url: `/api/produk/`,
+                                method: 'POST',
+                                data: {
+                                    "nama":$("#productName").val(),
+                                    "deskripsi":"-",
+                                    "telp":$("#productTelp").val(),
+                                    "link":$("#productLink").val()
+                                },
+                                success: function() {
+                                    Swal.fire({
+                                        title: 'Add Success',
+                                        text: '',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    }).then((result) => {
+                                        window.location.reload();
+                                    });
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error('Error updating product:', error);
+                                }
                             });
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Error updating product:', error);
+                        }else{
+                            $.each(files, function(i, file) {
+                                formData.append('productImages[]', file);
+                            });
+                            
+                            $.ajax({
+                                url: `/api/produk/`,
+                                method: 'POST',
+                                data: {
+                                    "nama":$("#productName").val(),
+                                    "deskripsi":"-",
+                                    "telp":$("#productTelp").val(),
+                                    "link":$("#productLink").val()
+                                },
+                                success: function(response) {
+                                    ///
+                                    var i = 0;
+                                    console.log(response);
+                                    
+                                    formData.forEach(function(value, key) {
+                                        $.ajax({
+                                            url: `${'/api/produkImg'}/`,
+                                            method: 'POST',
+                                            data: {
+                                                "id_produk":response.id,
+                                            },
+                                            success: function(responsex){
+                                                uploadFiles(responsex.id,i,true);
+                                                i++;
+                                            }
+                                        });
+                                    });
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error('Error updating product:', error);
+                                }
+                            });
                         }
-                    });
-                }
+                    }
+                })
             });
             ///
 
@@ -340,64 +401,84 @@
             // Tangani pengiriman form edit produk
             $('#editProductForm').on('submit', function(event) {
                 event.preventDefault();
-                var formData = new FormData();
-                var files = $('#editProductImages')[0].files;
-                
-                if (files.length === 0) {
-                    $.ajax({
-                        url: `${'/api/produk'}/${$('#editProductId').val()}`,
-                        method: 'PUT',
-                        data: {
-                            "nama":$("#editProductName").val(),
-                            "deskripsi":"-",
-                            "telp":$("#editProductelp").val(),
-                            "link":$("#editProductLink").val()
-                        },
-                        success: function() {
-                            window.location.reload();
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Error updating product:', error);
-                        }
-                    });
-                }
-
-                $.each(files, function(i, file) {
-                    formData.append('productImages[]', file);
-                });
-
-                $.ajax({
-                    url: `${'/api/produk'}/${$('#editProductId').val()}`,
-                    method: 'PUT',
-                    data: {
-                        "nama":$("#editProductName").val(),
-                        "deskripsi":"-",
-                        "telp":$("#editProductTelp").val(),
-                        "link":$("#editProductLink").val()
-                    },
-                    success: function(response) {
-                        ///
-                        var i = 0;
-                        formData.forEach(function(value, key) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Update Dashboard",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Update',
+                    cancelButtonText: 'No, cancel!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var formData = new FormData();
+                        var files = $('#editProductImages')[0].files;
+                        
+                        if (files.length === 0) {
                             $.ajax({
-                                url: `${'/api/produkImg'}/`,
-                                method: 'POST',
+                                url: `${'/api/produk'}/${$('#editProductId').val()}`,
+                                method: 'PUT',
                                 data: {
-                                    "id_produk":response.id,
+                                    "nama":$("#editProductName").val(),
+                                    "deskripsi":"-",
+                                    "telp":$("#editProductelp").val(),
+                                    "link":$("#editProductLink").val()
                                 },
-                                success: function(responsex){
-                                    uploadFiles(responsex.id,i,false);
-                                    i++;
+                                success: function() {
+                                    Swal.fire({
+                                        title: 'Update Berhasil',
+                                        text: '',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    }).then((result) => {
+                                        window.location.reload();
+                                    });
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error('Error updating product:', error);
                                 }
                             });
-                            
+                        }
+        
+                        $.each(files, function(i, file) {
+                            formData.append('productImages[]', file);
                         });
-                        // window.location.reload();
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error updating product:', error);
+        
+                        $.ajax({
+                            url: `${'/api/produk'}/${$('#editProductId').val()}`,
+                            method: 'PUT',
+                            data: {
+                                "nama":$("#editProductName").val(),
+                                "deskripsi":"-",
+                                "telp":$("#editProductTelp").val(),
+                                "link":$("#editProductLink").val()
+                            },
+                            success: function(response) {
+                                ///
+                                var i = 0;
+                                formData.forEach(function(value, key) {
+                                    $.ajax({
+                                        url: `${'/api/produkImg'}/`,
+                                        method: 'POST',
+                                        data: {
+                                            "id_produk":response.id,
+                                        },
+                                        success: function(responsex){
+                                            uploadFiles(responsex.id,i,false);
+                                            i++;
+                                        }
+                                    });
+                                    
+                                });
+                                // window.location.reload();
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error updating product:', error);
+                            }
+                        });
                     }
-                });
+                })
             });
             loadProducts();
         });

@@ -164,8 +164,14 @@
                 processData: false,
                 success: function() {
                     if (number+1 == max) {
-                        console.log('File uploaded successfully!');
-                        window.location.reload();
+                        Swal.fire({
+                            title: 'Update Berhasil',
+                            text: '',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            window.location.reload();
+                        });
                     }
                 },
                 error: function(xhr, status, error) {
@@ -217,13 +223,33 @@
                 });
             }
             window.deleteProduct = function(productId) {
-                $.ajax({
-                    url: `${'/api/atraksi'}/${productId}`,
-                    method: 'DELETE',
-                    success: function(response) {
-                        window.location.reload();
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Delete Atraksi",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Update',
+                    cancelButtonText: 'No, cancel!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `${'/api/atraksi'}/${productId}`,
+                            method: 'DELETE',
+                            success: function(response) {
+                                Swal.fire({
+                                    title: 'Delete Success',
+                                    text: '',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    window.location.reload();
+                                });
+                            }
+                        });
                     }
-                });
+                })
             };
             // Fungsi untuk menangani edit produk
             window.editProduct = function(productId) {
@@ -259,82 +285,119 @@
 
             // Fungsi untuk menghapus gambar
             window.removeImage = function(productId, imageId) {
-                if (confirm('Anda yakin ingin menghapus gambar ini?')) {
-                    $.ajax({
-                        url: `/api/atraksiImg/${imageId}`,
-                        method: 'DELETE',
-                        success: function() {
-                            alert('Gambar berhasil dihapus!');
-                            window.location.reload();
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Error deleting image:', error);
-                        }
-                    });
-                }
+                Swal.fire({
+                title: 'Are you sure?',
+                    text: "Delete Image",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Update',
+                    cancelButtonText: 'No, cancel!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `/api/atraksiImg/${imageId}`,
+                            method: 'DELETE',
+                            success: function() {
+                                Swal.fire({
+                                    title: 'Delete Success',
+                                    text: '',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    window.location.reload();
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error deleting image:', error);
+                            }
+                        });
+                    }
+                })
             };
 
-
+ 
             ///
             $('#atraksiForm').on('submit', function(event) {
                 event.preventDefault();
-                var formData = new FormData();
-                var files = $('#atraksiImages')[0].files;
-                
-                if (files.length === 0) {
-                    $.ajax({
-                        url: `/api/atraksi/`,
-                        method: 'POST',
-                        data: {
-                            "nama":$("#atraksiName").val(),
-                            "medsos":$("#atraksiInstagram").val(),
-                            "gmaps":$("#atraksiMaps").val()
-                        },
-                        success: function() {
-                            window.location.reload();
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Error updating product:', error);
-                        }
-                    });
-                }else{
-                    $.each(files, function(i, file) {
-                        formData.append('atraksiImages[]', file);
-                    });
-                    
-                    $.ajax({
-                        url: `/api/atraksi/`,
-                        method: 'POST',
-                        data: {
-                            "nama":$("#atraksiName").val(),
-                            "medsos":$("#atraksiInstagram").val(),
-                            "gmaps":$("#atraksiMaps").val()
-                        },
-                        success: function(response) {
-                            ///
-                            var i = 0;
-                            console.log(response);
-                            
-                            formData.forEach(function(value, key) {
-                                $.ajax({
-                                    url: `${'/api/atraksiImg'}/`,
-                                    method: 'POST',
-                                    data: {
-                                        "id_atraksi":response.id,
-                                    },
-                                    success: function(responsex){
-                                        uploadFiles(responsex.id,i,true);
-                                        i++;
-                                    }
-                                });
-                                
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Add New Atraksi",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Update',
+                    cancelButtonText: 'No, cancel!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var formData = new FormData();
+                        var files = $('#atraksiImages')[0].files;
+                        
+                        if (files.length === 0) {
+                            $.ajax({
+                                url: `/api/atraksi/`,
+                                method: 'POST',
+                                data: {
+                                    "nama":$("#atraksiName").val(),
+                                    "medsos":$("#atraksiInstagram").val(),
+                                    "gmaps":$("#atraksiMaps").val()
+                                },
+                                success: function() {
+                                    Swal.fire({
+                                        title: 'Success add New Atraksi',
+                                        text: '',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    }).then((result) => {
+                                        window.location.reload();
+                                    });
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error('Error updating product:', error);
+                                }
                             });
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Error updating product:', error);
+                        }else{
+                            $.each(files, function(i, file) {
+                                formData.append('atraksiImages[]', file);
+                            });
+                            
+                            $.ajax({
+                                url: `/api/atraksi/`,
+                                method: 'POST',
+                                data: {
+                                    "nama":$("#atraksiName").val(),
+                                    "medsos":$("#atraksiInstagram").val(),
+                                    "gmaps":$("#atraksiMaps").val()
+                                },
+                                success: function(response) {
+                                    ///
+                                    var i = 0;
+                                    console.log(response);
+                                    
+                                    formData.forEach(function(value, key) {
+                                        $.ajax({
+                                            url: `${'/api/atraksiImg'}/`,
+                                            method: 'POST',
+                                            data: {
+                                                "id_atraksi":response.id,
+                                            },
+                                            success: function(responsex){
+                                                uploadFiles(responsex.id,i,true);
+                                                i++;
+                                            }
+                                        });
+                                        
+                                    });
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error('Error updating product:', error);
+                                }
+                            });
                         }
-                    });
-                }
+                    }
+                })
             });
             ///
 

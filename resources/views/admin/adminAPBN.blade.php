@@ -110,11 +110,6 @@
                     cancelButtonText: 'No, cancel!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire(
-                            'Updated!',
-                            'Dashboard success Updated.',
-                            'success'
-                        );
                         $.ajax({
                             url: "/api/anggaran/1",
                             method: "PUT", // First change type to method here
@@ -125,7 +120,14 @@
                                 "belanja" : $("#belanja").val(),
                             },
                             success: function(response) {
-                                window.location.reload();
+                                Swal.fire({
+                                    title: 'Update Berhasil',
+                                    text: '',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    window.location.reload();
+                                });
                             }
                         });
                     } else if (result.isDismissed) {

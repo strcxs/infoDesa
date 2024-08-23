@@ -209,12 +209,6 @@
                     cancelButtonText: 'No, cancel!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire(
-                            'Updated!',
-                            'Dashboard success Updated.',
-                            'success'
-                        );
-                        // coding
                         $.ajax({
                             url: "/api/galeri/"+id,
                             method: "PUT", // First change type to method here
@@ -223,7 +217,14 @@
                                 "caption":caption,
                             },
                             success: function(response) {
-                                window.location.reload();
+                                Swal.fire({
+                                    title: 'Update Berhasil',
+                                    text: '',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    window.location.reload();
+                                });
                             }
                         });
                         
@@ -248,17 +249,18 @@
                     cancelButtonText: 'No, cancel!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire(
-                            'Deleted!',
-                            'Delete Successfully',
-                            'success'
-                        );
-                        // coding
                         $.ajax({
                             url: "/api/galeri/"+id,
                             method: "DELETE", // First change type to method here
                             success: function(response) {
-                                window.location.reload();
+                                Swal.fire({
+                                    title: 'Delete Successfully',
+                                    text: '',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    window.location.reload();
+                                });
                             }
                         });
                         
@@ -301,12 +303,6 @@
                     cancelButtonText: 'No, cancel!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire(
-                            'Updated!',
-                            'Galery success Updated.',
-                            'success'
-                        );
-                        // coding
                         if ($('#mediaType').val()=="video") {
                             $.ajax({
                                 url: "/api/galeri/",
@@ -317,7 +313,14 @@
                                     "caption":$("#captionY").val(),
                                 },
                                 success: function(response) {
-                                    window.location.reload();
+                                    Swal.fire({
+                                        title: 'Update Berhasil',
+                                        text: '',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    }).then((result) => {
+                                        window.location.reload();
+                                    });
                                 }
                             });
                         }else{
@@ -340,7 +343,14 @@
                                         contentType: false,
                                         data:images,
                                         success: function(response) {
-                                            window.location.reload();
+                                            Swal.fire({
+                                                title: 'Update Berhasil',
+                                                text: '',
+                                                icon: 'success',
+                                                confirmButtonText: 'OK'
+                                            }).then((result) => {
+                                                window.location.reload();
+                                            });
                                         }
                                     });
                                 }
@@ -356,8 +366,6 @@
                     }
                 });
             });
-            
-
         });
     </script>
 </body>

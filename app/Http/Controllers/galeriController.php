@@ -10,13 +10,15 @@ use Illuminate\Support\Facades\Validator;
 class galeriController extends Controller
 {
     public function index(){
-        $data = galeri::get();
+        $data = galeri::orderBy('created_at', 'desc')
+        ->get();
 
         return $data;
     }
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
             'caption' => 'required', 
+            'title' => 'required', 
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -25,11 +27,13 @@ class galeriController extends Controller
             $data = galeri::create([
                 'youTube'=> $request->youTube,
                 'caption'=> $request->caption,
+                'title'=> $request->title,
             ]);
             return $data;
         }else{
             $data = galeri::create([
                 'caption'=> $request->caption,
+                'title'=> $request->title,
             ]);
             return $data;
         }

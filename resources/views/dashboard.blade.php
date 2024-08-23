@@ -680,7 +680,7 @@
                                                 src="${image}" 
                                                 alt="Foto ${data.image}" 
                                                 class="img-fluid" 
-                                                style="object-fit: cover; cursor: pointer;" 
+                                                style="object-fit: cover; cursor: pointer;height:150px;width:300px;margin-bottom:10px" 
                                                 data-toggle="modal" 
                                                 data-target="#imageModal-${data.id}">
                                         </div>

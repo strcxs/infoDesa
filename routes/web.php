@@ -40,6 +40,9 @@ Route::get('/admin/produk', function () {
 Route::get('/admin/atraksi', function () {
     return view('admin/adminAtraksi');
 })->name("adminAtraksi");
+Route::get('/admin/change', function () {
+    return view('admin/password');
+})->name("change");
 
 
 Route::get('/', function () {

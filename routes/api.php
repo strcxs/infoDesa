@@ -30,6 +30,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         '/anggaran' => 'anggaranController',
         '/atraksi' => 'atraksiController',
         '/atraksiImg' => 'atraksiImgController',
+        '/auth' => 'authController',
     ]);
     Route::post('/dashboard/{id}', 'dashboardController@update');
     Route::post('/galeri/{id}', 'galeriController@update');
@@ -37,4 +38,10 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::post('/banner/{id}', 'bannerController@update');
     Route::post('/produkImg/{id}', 'imgController@update');
     Route::post('/atraksiImg/{id}', 'atraksiImgController@update');
+
+
+
+    Route::get('/auth', 'authController@getUser');
+    Route::post('/auth', 'authController@auth');
+    Route::post('/auth/{id}', 'authController@change');
 });

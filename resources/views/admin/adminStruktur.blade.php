@@ -104,12 +104,6 @@
                     cancelButtonText: 'No, cancel!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire(
-                            'Updated!',
-                            'success Updated.',
-                            'success'
-                        );
-                        // coding
                         var file = $('#fileUpload').prop('files')[0];
                         var images = new FormData();
                         images.append('image', file);
@@ -121,7 +115,14 @@
                             contentType: false,
                             data:images,
                             success: function(response) {
-                                window.location.reload();
+                                Swal.fire({
+                                    title: 'Update Berhasil',
+                                    text: '',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    window.location.reload();
+                                });
                             }
                         });
                         

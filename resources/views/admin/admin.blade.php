@@ -114,11 +114,6 @@
                     cancelButtonText: 'No, cancel!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire(
-                            'Updated!',
-                            'Dashboard success Updated.',
-                            'success'
-                        );
                         var file = $('#fileUpload').prop('files')[0];
                         var images = new FormData();
                         images.append('kades_image', file);
@@ -134,7 +129,14 @@
                                     "demografis" : $("#demografis").val(),
                                 },
                                 success: function(response) {
-                                    window.location.reload();
+                                    Swal.fire({
+                                        title: 'Update Berhasil',
+                                        text: '',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    }).then((result) => {
+                                        window.location.reload();
+                                    });
                                 }
                             });
                         }else{
@@ -155,7 +157,14 @@
                                             "demografis" : $("#demografis").val(),
                                         },
                                         success: function(response) {
-                                            window.location.reload();
+                                            Swal.fire({
+                                                title: 'Update Berhasil',
+                                                text: '',
+                                                icon: 'success',
+                                                confirmButtonText: 'OK'
+                                            }).then((result) => {
+                                                window.location.reload();
+                                            });
                                         }
                                     });
                                 }

@@ -150,11 +150,6 @@
                     cancelButtonText: 'No, cancel!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire(
-                            'Updated!',
-                            'Dashboard success Updated.',
-                            'success'
-                        );
                         $.ajax({
                             url: "/api/geografis/1",
                             method: "PUT", // First change type to method here
@@ -170,14 +165,16 @@
                                 "batas_selatan" : $("#batas-selatan").val(),
                                 "batas_timur" : $("#batas-timur").val(),
                                 "batas_barat" : $("#batas-barat").val(),
-
-                                // "nama_desa" : $("#nama_desa").val(),
-                                // "alamat_desa" : $("#alamat_desa").val(),
-                                // "luas_desa" : $("#luas_desa").val(),
-                                // "jumlah_penduduk" : $("#jumlah_penduduk").val(),
                             },
                             success: function(response) {
-                                window.location.reload();
+                                Swal.fire({
+                                    title: 'Update Berhasil',
+                                    text: '',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    window.location.reload();
+                                });
                             }
                         });
                     } else if (result.isDismissed) {
