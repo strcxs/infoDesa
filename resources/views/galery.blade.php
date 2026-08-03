@@ -81,23 +81,13 @@
                 method: "GET", // First change type to method here
                 success: function(response) {
                     var data = JSON.parse(response);
+                    var isDefault = false;
                     data.forEach(data => {
-                        
+                        if (data.is_default) {
+                            isDefault = true
+                        }
                         if (data.youTube != null) {
                             $('#galeri').append(
-                                // "<div class=\"col-12 col-md-6 col-lg-3 mb-4 flex-column align-items-center\">"+
-                                // "    <div class=\"d-flex\" style=\"height: 210px\">"+
-                                // "        <iframe width=\"560\" height=\"315\" style=\"height: auto; width:100%;\" "+
-                                // "            src=\""+data.youTube+"\" "+
-                                // "            title=\"YouTube video player\" frameborder=\"0\" "+
-                                // "            allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" "+
-                                // "            allowfullscreen=\"\">"+
-                                // "        </iframe>"+
-                                // "    </div>"+
-                                // "    <div class=\"caption text-center\">"+
-                                // "        <span>"+data.caption+"</span>"+
-                                // "    </div>"+
-                                // "</div>"
                                 `<div class="col-12 col-md-6 col-lg-6 mb-4">
                                     <div class="card row m-1">
                                         <div class="card-body col-6 col-md-6 col-lg-6 mb-6 d-flex">
@@ -122,7 +112,10 @@
                                 </div>`
                             );
                         }else{
-                            var image = "{{asset('storage/images/galeri/')}}" + '/' + data.image;
+                            var image = `{{asset('storage/images/galeri/${data.image}')}}`;
+                            if (isDefault) {
+                                var image = data.image;
+                            }
                             $('#galeri').append(
                                 `<div class="col-12 col-md-6 col-lg-6 mb-4">
                                     <div class="card row m-1">

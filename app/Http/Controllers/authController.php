@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Auth;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Auth as user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class authController extends Controller
 {
     public function getUser(){
-        $data = Auth::first();
+        $data = user::first();
 
         return $data;
     }
@@ -23,13 +24,18 @@ class authController extends Controller
             return response()->json($validator->errors(),442);
         }
         
-        $username = Auth::where('username','=',$request->username)->first();
-        $password = Auth::where('password','=',$request->password)->first();
+        $username = user::where('username','=',$request->username)->first();
+        $password = user::where('password','=',$request->password)->first();
         
         if ($username!=null) {
-            $decrypt_pass = $username->password;
-            // if (password_verify(md5($request->password), $decrypt_pass)){
-            if ($request->password == $password->password) {
+            $credentials = $request->validate([
+                'username' => 'required',
+                'password' => 'required',
+            ]);
+
+            // dd($credentials);
+
+            if (Auth::attempt($credentials)) {
                 $data = [
                     'login' => true,
                     'id' => $username->id,
@@ -43,7 +49,10 @@ class authController extends Controller
         }
     }
     public function change(Request $request,$id){
-        $username = Auth::find(1);
+        $username = user::get()->first();
+        $credentials = $request->validate([
+            'current_password' => 'required',
+        ]);
         $decrypt_pass = $username->password;
         if(password_verify(md5($request->current_password), $decrypt_pass)){
             $key = collect($request->all())->keys();
@@ -51,7 +60,7 @@ class authController extends Controller
             
     
             for ($i=0; $i < count($key); $i++) { 
-                $update = Auth::find($id);
+                $update = user::find($id);
                 if ($key[$i]==="password") {
                     $update->update([
                         "password"=> password_hash($hash, PASSWORD_DEFAULT)

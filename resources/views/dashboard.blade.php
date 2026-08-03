@@ -189,7 +189,7 @@
         <div class="row align-items-center">
             <!-- Foto Kepala Desa -->
             <div class="col-6 col-md-3">
-                <div id="card" class="card text-center" data-target="umkm">
+                <div id="card" class="card text-center" data-target="produkDiv">
                     <div class="card-body">
                         <i class="fas fa-map-marked-alt fa-3x mb-3"></i>
                         <h5 class="card-title">Potensi Desa</h5>
@@ -213,13 +213,13 @@
                     <div class="card-body">
                         <i class="fas fa-hands-helping fa-3x mb-3"></i>
                         <h5 class="card-title">Layanan Masyarakat</h5>
-                        <p class="card-text">Layanan untuk masyarakat.</p>
+                        <p class="card-text">Layanan untuk masyarakat Hebat.</p>
                     </div>
                 </div>
             </div>
             <!-- Card 4: Kegiatan Desa -->
             <div class="col-6 col-md-3">
-                <div id="card" class="card text-center" data-target="galerix">
+                <div id="card" class="card text-center" data-target="galeriDiv">
                     <div class="card-body">
                         <i class="fas fa-calendar-day fa-3x mb-3"></i>
                         <h5 class="card-title">Kegiatan Desa</h5>
@@ -256,7 +256,7 @@
             </div>
         </div>
     </div>
-    <div class="container mt-5" id="umkm">
+    <div class="container mt-5" id="produkDiv">
         <div class="text-center mb-4">
             <hr class="custom-hr">
             <h2 class="text-content" style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;color: #50A309">UMKM Desa Kertawangi</h2>
@@ -270,7 +270,7 @@
         </div>
     </div>
     <hr class="custom-hr">
-    <div class="container mt-5" id="galerix">
+    <div class="container mt-5" id="galeriDiv">
         <div class="row">
             <div class="col-12 col-md-4 col-lg-4 mb-4 d-flex align-items-center text-center">
                 <p>
@@ -291,7 +291,7 @@
         </div>
     </div>
     {{--  --}}
-    <div class="container mt-5">
+    <div class="container mt-5" id="atraksiDiv">
         <div class="text-center mb-4">
             <hr class="custom-hr">
             <h2 class="text-content" style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;color: #50A309">Atraksi Desa Kertawangi</h2>
@@ -572,8 +572,14 @@
                 method: "GET", // First change type to method here
                 success: function(response) {
                     var data = JSON.parse(response);
-                    document.getElementById('umkm').style.display = 'none';
+                    var isDefault = false;
+                    if (data.length < 1) {
+                        document.getElementById('atraksiDiv').style.display = 'none';
+                    }
                     data.forEach((data,index) => {
+                        if (data.is_default) {
+                            isDefault = true;
+                        }
                         medsos = null;
                         maps = null;
                         
@@ -617,17 +623,33 @@
                             data.data_image.forEach((image,index) => {
                                 if (image.atraksi_img != null) {
                                     if (index == 0) {
-                                        $("#produk-img-"+data.id+"").append(
-                                            '<div class="carousel-item active">' +
-                                            '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/atraksi/${image.atraksi_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
-                                            '</div>' 
-                                        );
+                                        if (isDefault) {
+                                            $("#produk-img-"+data.id+"").append(
+                                                '<div class="carousel-item active">' +
+                                                '    <img style="height: 200px; object-fit: cover" src="'+`${image.atraksi_img}`+'" class="d-block w-100" alt="Produk 1">' +
+                                                '</div>' 
+                                            );    
+                                        }else{
+                                            $("#produk-img-"+data.id+"").append(
+                                                '<div class="carousel-item active">' +
+                                                '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/atraksi/${image.atraksi_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
+                                                '</div>' 
+                                            );
+                                        }
                                     }else{
-                                        $("#produk-img-"+data.id+"").append(
-                                            '<div class="carousel-item">' +
-                                            '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/atraksi/${image.atraksi_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
-                                            '</div>' 
-                                        );
+                                        if (isDefault) {
+                                            $("#produk-img-"+data.id+"").append(
+                                                '<div class="carousel-item">' +
+                                                '    <img style="height: 200px; object-fit: cover" src="'+`${image.atraksi_img}`+'" class="d-block w-100" alt="Produk 1">' +
+                                                '</div>' 
+                                            );
+                                        }else{ 
+                                            $("#produk-img-"+data.id+"").append(
+                                                '<div class="carousel-item">' +
+                                                '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/atraksi/${image.atraksi_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
+                                                '</div>' 
+                                            );
+                                        }
                                     }
                                 }else{
                                     $("#produk-img-"+data.id+"").append(
@@ -652,14 +674,21 @@
                 method: "GET", // First change type to method here
                 success: function(response) {
                     var data = JSON.parse(response);
+                    var isDefault = false;
                     var num = 0;
+                    if (data.length < 1) {
+                        document.getElementById('galeriDiv').style.display = 'none';
+                    }
                     data.forEach(data => {
+                        if (data.is_default) {
+                            isDefault = true;
+                        }
                         if (num<4) {
                             if (data.youTube != null) {
                                 $('#galeri').append(
                                     `<div class="card col-6 mb-2 p-3">
                                         <div class="video-container">
-                                            <iframe style="object-fit:cover"
+                                            <iframe style="object-fit:cover; height:150px;width:300px;margin-bottom:10px"
                                                 src="${data.youTube}" 
                                                 title="YouTube video player" frameborder="0" 
                                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -675,9 +704,12 @@
                                     </div>`
                                 );
                             }else{
-                                var image = "{{asset('storage/images/galeri/')}}" + '/' + data.image;
+                                var image = `{{asset('storage/images/galeri/${data.image}')}}`;
+                                if (isDefault) {
+                                    var image = data.image;
+                                }
                                 $('#galeri').append(
-                                    `<div class="card col-6 mb-4 p-3">
+                                    `<div class="card col-6 mb-2 p-3">
                                         <div class="image-container">
                                             <img 
                                                 src="${image}" 
@@ -721,7 +753,14 @@
                 success: function(response) {
                     var data = JSON.parse(response);
                     var loop = 0;
+                    var isDefault = false;
+                    if (data.length < 1) {
+                        document.getElementById('produkDiv').style.display = 'none';
+                    }
                     data.forEach((data,index) => {
+                        if (data.is_default) {
+                            isDefault = true;
+                        }
                         number = null;
                         whastapp = null;
                         if (loop < 3) {
@@ -765,17 +804,33 @@
                                 data.data_image.forEach((image,index) => {
                                     if (image.produk_img != null) {
                                         if (index == 0) {
-                                            $("#produk-img-"+data.id+"").append(
-                                                '<div class="carousel-item active">' +
-                                                '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/produk/${image.produk_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
-                                                '</div>' 
-                                            );
+                                            if (isDefault) {
+                                                $("#produk-img-"+data.id+"").append(
+                                                    '<div class="carousel-item active">' +
+                                                    '    <img style="height: 200px; object-fit: cover" src="'+`${image.produk_img}`+'" class="d-block w-100" alt="Produk 1">' +
+                                                    '</div>' 
+                                                );
+                                            }else{ 
+                                                $("#produk-img-"+data.id+"").append(
+                                                    '<div class="carousel-item active">' +
+                                                    '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/produk/${image.produk_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
+                                                    '</div>' 
+                                                );
+                                            }
                                         }else{
-                                            $("#produk-img-"+data.id+"").append(
-                                                '<div class="carousel-item">' +
-                                                '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/produk/${image.produk_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
-                                                '</div>' 
-                                            );
+                                            if (isDefault) {
+                                                $("#produk-img-"+data.id+"").append(
+                                                    '<div class="carousel-item">' +
+                                                    '    <img style="height: 200px; object-fit: cover" src="'+`${image.produk_img}`+'" class="d-block w-100" alt="Produk 1">' +
+                                                    '</div>' 
+                                                );
+                                            }else{ 
+                                                $("#produk-img-"+data.id+"").append(
+                                                    '<div class="carousel-item">' +
+                                                    '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/produk/${image.produk_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
+                                                    '</div>' 
+                                                );
+                                            }
                                         }
                                     }else{
                                         $("#produk-img-"+data.id+"").append(
@@ -831,23 +886,48 @@
                 method: "GET", // First change type to method here
                 success: function(response) {
                     var data = JSON.parse(response);
+                    var isDefault = false;
                     data.forEach((data,index) => {
+                        
+                        if (data.is_default) {
+                            isDefault = true;
+                        }
                         if (index == 0) {
-                            $('#banner').append(
-                                '<div class="carousel-item active">' +
-                                '    <img class="d-block w-100 img-fluid" src="'+`{{asset('storage/images/banner/${data.banner_img}')}}`+'" alt="Produk 1" style="max-height: 450px; object-fit: cover;">' +
-                                '    <div class="carousel-caption d-none d-md-block">' +
-                                '    </div>' +
-                                '</div>'
-                            )
+                            if (isDefault) {
+                                $('#banner').append(
+                                    '<div class="carousel-item active">' +
+                                    '    <img class="d-block w-100 img-fluid" src="'+`${data.banner_img}`+'" alt="Produk 1" style="max-height: 450px; object-fit: cover;">' +
+                                    '    <div class="carousel-caption d-none d-md-block">' +
+                                    '    </div>' +
+                                    '</div>'
+                                )
+                            }else{
+                                $('#banner').append(
+                                    '<div class="carousel-item active">' +
+                                    '    <img class="d-block w-100 img-fluid" src="'+`{{asset('storage/images/banner/${data.banner_img}')}}`+'" alt="Produk 1" style="max-height: 450px; object-fit: cover;">' +
+                                    '    <div class="carousel-caption d-none d-md-block">' +
+                                    '    </div>' +
+                                    '</div>'
+                                )
+                            }
                         }else{
-                            $('#banner').append(
-                                '<div class="carousel-item">' +
-                                '    <img class="d-block w-100 img-fluid" src="'+`{{asset('storage/images/banner/${data.banner_img}')}}`+'" alt="Produk 1" style="max-height: 450px; object-fit: cover;">' +
-                                '    <div class="carousel-caption d-none d-md-block">' +
-                                '    </div>' +
-                                '</div>'
-                            )
+                            if(isDefault){
+                                $('#banner').append(
+                                    '<div class="carousel-item">' +
+                                    '    <img class="d-block w-100 img-fluid" src="'+`${data.banner_img}`+'" alt="Produk 1" style="max-height: 450px; object-fit: cover;">' +
+                                    '    <div class="carousel-caption d-none d-md-block">' +
+                                    '    </div>' +
+                                    '</div>'
+                                )
+                            }else{
+                                $('#banner').append(
+                                    '<div class="carousel-item">' +
+                                    '    <img class="d-block w-100 img-fluid" src="'+`{{asset('storage/images/banner/${data.banner_img}')}}`+'" alt="Produk 1" style="max-height: 450px; object-fit: cover;">' +
+                                    '    <div class="carousel-caption d-none d-md-block">' +
+                                    '    </div>' +
+                                    '</div>'
+                                )
+                            }
                         }
                     });
                 }
@@ -857,7 +937,15 @@
                 method: "GET", // First change type to method here
                 success: function(response) {
                     var data = JSON.parse(response);
-                    $('#kades_image').attr('src', `{{asset('storage/images/kades/${data.kades_image}')}}`);
+                    if (data.kades_image) {
+                        if (data.is_default) {
+                            $('#kades_image').attr('src', data.kades_image);
+                        }else{
+                            $('#kades_image').attr('src', `{{asset('storage/images/kades/${data.kades_image}')}}`);
+                        }
+                    }else{
+                        $('#kades_image').attr('src', `https://www.svgrepo.com/show/508699/landscape-placeholder.svg`);
+                    }
                     $("#about").text(data.about);
                     $("#visi").text(data.visi);
                     $("#geografis").text(data.geografis);

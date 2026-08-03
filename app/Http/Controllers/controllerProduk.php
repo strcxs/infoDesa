@@ -14,6 +14,66 @@ class controllerProduk extends Controller
         ->orderBy('created_at', 'desc')
         ->get();
 
+        $produk = collect([
+            new Produk([
+                "id" => 1,
+                "is_default" => true,
+                "nama" => "Produk Default",
+                "deskripsi" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic",
+                "telp" => "081234567890",
+                "link" => "https://www.instagram.com",
+            ]),
+            new Produk([
+                "id" => 2,
+                "is_default" => true,
+                "nama" => "Produk Default 2",
+                "deskripsi" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic",
+                "telp" => "081234567890",
+                "link" => "https://www.instagram.com",
+            ]),
+            new Produk([
+                "id" => 3,
+                "is_default" => true,
+                "nama" => "Produk Default 3",
+                "deskripsi" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic",
+                "telp" => "081234567890",
+                "link" => "https://www.instagram.com",
+            ]),
+        ]);
+
+        $produk[0]->setRelation('dataImage', collect([
+            new ProdukImg([
+                "id" => 1,
+                "id_produk" => 1,
+                "produk_img" => "https://www.svgrepo.com/show/508699/landscape-placeholder.svg",
+                "created_at" => "2024-06-01T12:00:00Z",
+                "updated_at" => "2024-06-01T12:00:00Z",
+            ])
+        ]));
+        $produk[1]->setRelation('dataImage', collect([
+            new ProdukImg([
+                "id" => 1,
+                "id_produk" => 2,
+                "produk_img" => "https://www.svgrepo.com/show/508699/landscape-placeholder.svg",
+                "created_at" => "2024-06-01T12:00:00Z",
+                "updated_at" => "2024-06-01T12:00:00Z",
+            ])
+        ]));
+        $produk[2]->setRelation('dataImage', collect([
+            new ProdukImg([
+                "id" => 1,
+                "id_produk" => 3,
+                "produk_img" => "https://www.svgrepo.com/show/508699/landscape-placeholder.svg",
+                "created_at" => "2024-06-01T12:00:00Z",
+                "updated_at" => "2024-06-01T12:00:00Z",
+            ])
+        ]));
+        $default = $produk;
+
+        if (config('app.is_demo')) {
+            return $default;
+        }
+
         return $data;
     }
     public function show($id){

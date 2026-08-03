@@ -12,6 +12,29 @@ class bannerController extends Controller
     public function index(){
         $data = Banner::get();
 
+        $banner = collect([
+            new Banner([
+                "id" => 1,
+                "is_default" => true,
+                "banner_img" => "https://www.svgrepo.com/show/508699/landscape-placeholder.svg",
+            ]),
+            new Banner([
+                "id" => 2,
+                "is_default" => true,
+                "banner_img" => "https://www.svgrepo.com/show/508699/landscape-placeholder.svg",
+            ]),
+            new Banner([
+                "id" => 3,
+                "is_default" => true,
+                "banner_img" => "https://www.svgrepo.com/show/508699/landscape-placeholder.svg",
+            ]),
+        ]);
+        $default = $banner;
+
+        if (config('app.is_demo')) {
+            return $default;
+        }
+        
         return $data;
     }
     public function update(Request $request,$id){

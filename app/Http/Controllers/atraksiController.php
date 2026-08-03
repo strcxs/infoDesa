@@ -13,6 +13,63 @@ class atraksiController extends Controller
         $data = Atraksi::with("dataImage")
         ->orderBy('created_at', 'desc')
         ->get();
+        
+        $atraksi = collect([
+            new Atraksi([
+                "id" => 1,
+                "is_default" => true,
+                "nama" => "Kegiatan Berkebun Bersama",
+                "medsos" => "https://www.instagram.com",
+                "gmaps" => "https://www.google.com/maps",
+            ]),
+            new Atraksi([
+                "id" => 2,
+                "is_default" => true,
+                "nama" => "Kegiatan Wisata Alam",
+                "medsos" => "https://www.instagram.com/",
+                "gmaps" => "https://www.google.com/maps",
+            ]),
+            new Atraksi([
+                "id" => 3,
+                "is_default" => true,
+                "nama" => "Kegiatan Wisata Kuliner",
+                "medsos" => "https://www.instagram.com/",
+                "gmaps" => "https://www.google.com/maps",
+            ]),
+        ]);
+
+        $atraksi[0]->setRelation('dataImage', collect([
+            new AtraksiImg([
+                "id" => 1,
+                "id_atraksi" => 1,
+                "atraksi_img" => "https://www.svgrepo.com/show/508699/landscape-placeholder.svg",
+                "created_at" => "2024-06-01T12:00:00Z",
+                "updated_at" => "2024-06-01T12:00:00Z",
+            ])
+        ]));
+        $atraksi[1]->setRelation('dataImage', collect([
+            new AtraksiImg([
+                "id" => 1,
+                "id_atraksi" => 1,
+                "atraksi_img" => "https://www.svgrepo.com/show/508699/landscape-placeholder.svg",
+                "created_at" => "2024-06-01T12:00:00Z",
+                "updated_at" => "2024-06-01T12:00:00Z",
+            ])
+        ]));
+        $atraksi[2]->setRelation('dataImage', collect([
+            new AtraksiImg([
+                "id" => 1,
+                "id_atraksi" => 1,
+                "atraksi_img" => "https://www.svgrepo.com/show/508699/landscape-placeholder.svg",
+                "created_at" => "2024-06-01T12:00:00Z",
+                "updated_at" => "2024-06-01T12:00:00Z",
+            ])
+        ]));
+        $default = $atraksi;
+
+        if (config('app.is_demo')) {
+            return $default;
+        }
 
         return $data;
     }

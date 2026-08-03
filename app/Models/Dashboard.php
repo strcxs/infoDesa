@@ -11,4 +11,13 @@ class Dashboard extends Model
     
     protected $table = "dashboard";
     protected $guarded = ["id","created_at","updated_at"];
+
+    protected $fillable = [
+        'is_default',
+        'misi',
+        'visi',
+        'about',
+        'demografis',
+        'kades_image',
+    ];
 }

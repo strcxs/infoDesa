@@ -69,7 +69,9 @@
                 method: "GET", // First change type to method here
                 success: function(response) {
                     var data = JSON.parse(response);
+                    var isDefault = false;
                     data.forEach((data,index) => {
+                        isDefault = data.is_default;
                         number = null;
                         whastapp = null;
                         
@@ -113,9 +115,39 @@
                             data.data_image.forEach((image,index) => {
                                 if (image.produk_img != null) {
                                     if (index == 0) {
+                                        if(isDefault){
+                                            $("#produk-img-"+data.id+"").append(
+                                                '<div class="carousel-item active">' +
+                                                '    <img style="height: 200px; object-fit: cover" src="'+`${image.produk_img}`+'" class="d-block w-100" alt="Produk 1">' +
+                                                '</div>' 
+                                            );
+                                        }else{
+                                            $("#produk-img-"+data.id+"").append(
+                                                '<div class="carousel-item active">' +
+                                                '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/produk/${image.produk_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
+                                                '</div>' 
+                                            );
+                                        }
+                                    }else{
+                                        if(isDefault){
+                                            $("#produk-img-"+data.id+"").append(
+                                                '<div class="carousel-item">' +
+                                                '    <img style="height: 200px; object-fit: cover" src="'+`${image.produk_img}`+'" class="d-block w-100" alt="Produk 1">' +
+                                                '</div>' 
+                                            );
+                                        }else{
+                                            $("#produk-img-"+data.id+"").append(
+                                                '<div class="carousel-item">' +
+                                                '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/produk/${image.produk_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
+                                                '</div>' 
+                                            );
+                                        }
+                                    }
+                                }else{
+                                    if(isDefault){
                                         $("#produk-img-"+data.id+"").append(
-                                            '<div class="carousel-item active">' +
-                                            '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/produk/${image.produk_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
+                                            '<div class="carousel-item">' +
+                                            '    <img style="height: 200px; object-fit: cover" src="'+`${image.produk_img}`+'" class="d-block w-100" alt="Produk 1">' +
                                             '</div>' 
                                         );
                                     }else{
@@ -125,12 +157,6 @@
                                             '</div>' 
                                         );
                                     }
-                                }else{
-                                    $("#produk-img-"+data.id+"").append(
-                                        '<div class="carousel-item">' +
-                                        '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/produk/${image.produk_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
-                                        '</div>' 
-                                    );
                                 }
                             });
                         }else{

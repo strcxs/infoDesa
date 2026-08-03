@@ -13,6 +13,41 @@ class galeriController extends Controller
         $data = galeri::orderBy('created_at', 'desc')
         ->get();
 
+        $default = collect([
+            new galeri([
+                "id" => 1,
+                "is_default" => true,
+                "image" => "https://www.svgrepo.com/show/508699/landscape-placeholder.svg",
+                "caption" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic",
+                "title" => "Title Default",
+            ]),
+            new galeri([
+                "id" => 2,
+                "is_default" => true,
+                "image" => "https://www.svgrepo.com/show/508699/landscape-placeholder.svg",
+                "caption" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic",
+                "title" => "Title Default 2",
+            ]),
+            new galeri([
+                "id" => 3,
+                "is_default" => true,
+                "image" => "https://www.svgrepo.com/show/508699/landscape-placeholder.svg",
+                "caption" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic",
+                "title" => "Title Default 3",
+            ]),
+            new galeri([
+                "id" => 4,
+                "is_default" => true,
+                "image" => "https://www.svgrepo.com/show/508699/landscape-placeholder.svg",
+                "caption" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic",
+                "title" => "Title Default 4",
+            ]),
+        ]);
+
+        if (config('app.is_demo')) {
+            return $default;
+        }
+
         return $data;
     }
     public function store(Request $request){

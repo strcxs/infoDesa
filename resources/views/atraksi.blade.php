@@ -73,7 +73,11 @@
                 method: "GET", // First change type to method here
                 success: function(response) {
                     var data = JSON.parse(response);
+                    var isDefault = false;
                     data.forEach((data,index) => {
+                        if (data.is_default) {
+                            isDefault = true;
+                        }
                         medsos = null;
                         maps = null;
                         
@@ -117,9 +121,39 @@
                             data.data_image.forEach((image,index) => {
                                 if (image.atraksi_img != null) {
                                     if (index == 0) {
+                                        if (isDefault) {
+                                            $("#produk-img-"+data.id+"").append(
+                                                '<div class="carousel-item active">' +
+                                                '    <img style="height: 200px; object-fit: cover" src="'+`${image.atraksi_img}`+'" class="d-block w-100" alt="Produk 1">' +
+                                                '</div>' 
+                                            );
+                                        }else{
+                                            $("#produk-img-"+data.id+"").append(
+                                                '<div class="carousel-item active">' +
+                                                '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/atraksi/${image.atraksi_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
+                                                '</div>' 
+                                            );
+                                        }
+                                    }else{
+                                        if (isDefault) {
+                                            $("#produk-img-"+data.id+"").append(
+                                                '<div class="carousel-item">' +
+                                                '    <img style="height: 200px; object-fit: cover" src="'+`${image.atraksi_img}`+'" class="d-block w-100" alt="Produk 1">' +
+                                                '</div>' 
+                                            );
+                                        }else{
+                                            $("#produk-img-"+data.id+"").append(
+                                                '<div class="carousel-item">' +
+                                                '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/atraksi/${image.atraksi_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
+                                                '</div>' 
+                                            );
+                                        }
+                                    }
+                                }else{
+                                    if (isDefault) {
                                         $("#produk-img-"+data.id+"").append(
-                                            '<div class="carousel-item active">' +
-                                            '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/atraksi/${image.atraksi_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
+                                            '<div class="carousel-item">' +
+                                            '    <img style="height: 200px; object-fit: cover" src="'+`${image.atraksi_img}`+'" class="d-block w-100" alt="Produk 1">' +
                                             '</div>' 
                                         );
                                     }else{
@@ -129,12 +163,6 @@
                                             '</div>' 
                                         );
                                     }
-                                }else{
-                                    $("#produk-img-"+data.id+"").append(
-                                        '<div class="carousel-item">' +
-                                        '    <img style="height: 200px; object-fit: cover" src="'+`{{asset('storage/images/atraksi/${image.atraksi_img}')}}`+'" class="d-block w-100" alt="Produk 1">' +
-                                        '</div>' 
-                                    );
                                 }
                             });
                         }else{
