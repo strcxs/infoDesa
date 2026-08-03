@@ -572,6 +572,7 @@
                 method: "GET", // First change type to method here
                 success: function(response) {
                     var data = JSON.parse(response);
+                    document.getElementById('umkm').style.display = 'none';
                     data.forEach((data,index) => {
                         medsos = null;
                         maps = null;
