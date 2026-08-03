@@ -38,9 +38,26 @@ class controllerProduk extends Controller
     }
     public function update(Request $request,$id){
         $key = collect($request->all())->keys();
-        // if (condition) {
-        //     # code...
-        // }
+        if ($request->hasFile('image')) {
+            $validator = Validator::make($request->all(),[
+                'image'     => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+            if ($validator->fails()){
+                return response()->json($validator->errors(),442);
+            }
+            $data = $request->file('image');
+            $data->storeAs('public/images/produk/', $data->hashName());
+            //delete old image
+            if (Produk::find($id)) {
+                Storage::delete('public/images/produk/'.Produk::find($id)->image);
+            }
+            // Storage::delete('public/images/produk/'.Produk::find($id)->image);
+            
+            Produk::find($id)->update([
+                'image'=> $data->hashName(),
+                'updated_at' => now(),
+            ]);
+        }
         $update = Produk::find($id);
         for ($i=0; $i < count($key); $i++) { 
             $update->update([

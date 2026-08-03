@@ -6,7 +6,7 @@
     <title>Admin Desa</title>
     <!-- Bootstrap CSS -->
 
-    <link rel="shortcut icon" type="image/icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/1200px-Kab_Bandung_Barat.svg.png"/>
+    <link rel="shortcut icon" type="image/icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/3840px-Kab_Bandung_Barat.svg.png"/>
     
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -119,22 +119,23 @@
                 url: "/api/geografis/",
                 method: "GET", // First change type to method here
                 success: function(response) {
-                    $('#kode-desa').val(response.kode_desa);
-                    $('#tahun-pembentukan').val(response.tahun_pembentukan);
-                    $('#dasar-hukum').val(response.dasar_hukum);
-                    $('#tipologi').val(response.tipologi);
-                    $('#klasifikasi').val(response.klasifikasi);
-                    $('#kategori').val(response.kategori);
-                    $('#luas-wilayah').val(response.luas_wilayah);
-                    $('#batas-utara').val(response.batas_utara);
-                    $('#batas-selatan').val(response.batas_selatan);
-                    $('#batas-timur').val(response.batas_timur);
-                    $('#batas-barat').val(response.batas_barat);
+                    var data = JSON.parse(response);
+                    $('#kode-desa').val(data.kode_desa);
+                    $('#tahun-pembentukan').val(data.tahun_pembentukan);
+                    $('#dasar-hukum').val(data.dasar_hukum);
+                    $('#tipologi').val(data.tipologi);
+                    $('#klasifikasi').val(data.klasifikasi);
+                    $('#kategori').val(data.kategori);
+                    $('#luas-wilayah').val(data.luas_wilayah);
+                    $('#batas-utara').val(data.batas_utara);
+                    $('#batas-selatan').val(data.batas_selatan);
+                    $('#batas-timur').val(data.batas_timur);
+                    $('#batas-barat').val(data.batas_barat);
 
-                    // $("#nama_desa").text(response.nama_desa);
-                    // $("#alamat_desa").text(response.alamat_desa);
-                    // $("#luas_desa").text(response.luas_desa);
-                    // $("#jumlah_penduduk").text(response.jumlah_penduduk);
+                    // $("#nama_desa").text(data.nama_desa);
+                    // $("#alamat_desa").text(data.alamat_desa);
+                    // $("#luas_desa").text(data.luas_desa);
+                    // $("#jumlah_penduduk").text(data.jumlah_penduduk);
                 }
             });
             

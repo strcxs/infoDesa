@@ -33,7 +33,7 @@
                     <li><a href="https://www.kemendagri.go.id/" target="default">KEMENDAGRI</a></li>
                     <li><a href="https://www.kemendesa.go.id/" target="default">KEMENDESA</a></li>
                     <li><a href="https://www.kominfo.go.id/" target="default">KEMENKOMINFO</a></li>
-                    <li><a href="https://pahlawandesa.id/produk-desa-kertamulya" target="default">Produk Desa Kertamulya</a></li>
+                    <li><a href="https://desakertawangi.id" target="default">Produk Desa Kertawangi</a></li>
                 </ul>
             </div>
             <!-- Footer Contact Section -->
@@ -42,7 +42,7 @@
                 <p>
                     Kantor Desa, Jl. Kolonel Masturi No.339, Kertawangi, Cisarua, West Bandung Regency, West Java 40551 <br><br>
                     <strong>Telepon:</strong> (022) 2700525<br><br>
-                    <strong>Email:</strong> <a href="mailto:pemdes@rdf.faishal@gmail.com">rdf.faishal@gmail.com</a>
+                    <strong>Email:</strong> <a href="mailto:@rdf.faishal@gmail.com">rdf.faishal@gmail.com</a>
                 </p>
             </div>
         </div>

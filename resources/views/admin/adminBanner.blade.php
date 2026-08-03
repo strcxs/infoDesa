@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Halaman Admin</title>
     <!-- Bootstrap CSS -->
-    <link rel="shortcut icon" type="image/icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/1200px-Kab_Bandung_Barat.svg.png"/>
+    <link rel="shortcut icon" type="image/icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/3840px-Kab_Bandung_Barat.svg.png"/>
     
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -176,7 +176,8 @@
                 url: "/api/banner/",
                 method: "GET", // First change type to method here
                 success: function(response) {
-                    response.forEach(data => {
+                    var data = JSON.parse(response);
+                    data.forEach(data => {
                         img = "{{asset('storage/images/banner/')}}" + '/' + data.banner_img;
                         $('#dataTabel').append(
                             "<tr>"+

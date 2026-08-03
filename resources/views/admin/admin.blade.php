@@ -6,7 +6,7 @@
     <title>Admin Desa</title>
     <!-- Bootstrap CSS -->
 
-    <link rel="shortcut icon" type="image/icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/1200px-Kab_Bandung_Barat.svg.png"/>
+    <link rel="shortcut icon" type="image/icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/3840px-Kab_Bandung_Barat.svg.png"/>
     
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -95,10 +95,11 @@
                 url: "/api/dashboard/",
                 method: "GET", // First change type to method here
                 success: function(response) {
-                    $("#about").text(response.about);
-                    $("#visi").text(response.visi);
-                    $("#misi").text(response.misi);
-                    $("#demografis").text(response.demografis);
+                    var data = JSON.parse(response);
+                    $("#about").text(data.about);
+                    $("#visi").text(data.visi);
+                    $("#misi").text(data.misi);
+                    $("#demografis").text(data.demografis);
                 }
             });
             

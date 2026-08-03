@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/login', function () {
-    return view('auth/login');
+    return view('Auth/login');
 })->name("login");
 
 Route::get('/admin', function () {

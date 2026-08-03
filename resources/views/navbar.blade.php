@@ -59,7 +59,7 @@
 </style>
 <nav class="navbar navbar-expand-lg navbar-dark bg-custom sticky-top">
     <a class="navbar-brand" href="{{ route('home') }}">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/1200px-Kab_Bandung_Barat.svg.png" width="30" height="30" class="d-inline-block align-top" alt="Logo Desa">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/3840px-Kab_Bandung_Barat.svg.png" width="30" height="30" class="d-inline-block align-top" alt="Logo Desa">
         <div class="d-inline-block align-top ml-2 text-custom">
             <p class="text-light">Desa Kertawangi</p>
             <br>
@@ -114,7 +114,8 @@
             url: "/api/dashboard/",
             method: "GET", // First change type to method here
             success: function(response) {
-                $("#about-footer").text(response.about);
+                var data = JSON.parse(response);
+                $("#about-footer").text(data.about);
             }
         });
     });

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Halaman Admin</title>
     <!-- Bootstrap CSS -->
-    <link rel="shortcut icon" type="image/icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/1200px-Kab_Bandung_Barat.svg.png"/>
+    <link rel="shortcut icon" type="image/icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/3840px-Kab_Bandung_Barat.svg.png"/>
     
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -185,7 +185,8 @@
                     url: "/api/produk",
                     method: 'GET',
                     success: function(products) {
-                        products.forEach(product => {
+                        var data = JSON.parse(products);
+                        data.forEach(product => {
                             var link = `<a href="${product.link}" target="_blank">link</a>`;
                             if (product.link == "-") {
                                 link = "-";
@@ -252,14 +253,15 @@
                     url: `${'/api/produk'}/${productId}`,
                     method: 'GET',
                     success: function(product) {
-                        $('#editProductName').val(product.nama);
-                        $('#editProductTelp').val(product.telp);
-                        $('#editProductLink').val(product.link);
+                        var data = JSON.parse(product);
+                        $('#editProductName').val(data.nama);
+                        $('#editProductTelp').val(data.telp);
+                        $('#editProductLink').val(data.link);
                         $('#editProductId').val(productId);
 
                         const imageContainer = $('#currentImages');
                         imageContainer.empty();
-                        product.data_image.forEach(img => {
+                        data.data_image.forEach(img => {
                             const imgDiv = $(`
                                 <div class="position-relative me-2 mb-2">
                                     <img style="height:60px" src="{{asset('storage/images/produk/${img.produk_img}')}}" alt="Gambar ${img.produk_img}" class="img-thumbnail">
@@ -370,6 +372,7 @@
                                 },
                                 success: function(response) {
                                     ///
+                                    var data = JSON.parse(response);
                                     var i = 0;
                                     console.log(response);
                                     
@@ -378,10 +381,11 @@
                                             url: `${'/api/produkImg'}/`,
                                             method: 'POST',
                                             data: {
-                                                "id_produk":response.id,
+                                                "id_produk":data.id,
                                             },
                                             success: function(responsex){
-                                                uploadFiles(responsex.id,i,true);
+                                                var datax = JSON.parse(responsex);
+                                                uploadFiles(datax.id,i,true);
                                                 i++;
                                             }
                                         });
@@ -456,16 +460,18 @@
                             },
                             success: function(response) {
                                 ///
+                                var data = JSON.parse(response);
                                 var i = 0;
                                 formData.forEach(function(value, key) {
                                     $.ajax({
                                         url: `${'/api/produkImg'}/`,
                                         method: 'POST',
                                         data: {
-                                            "id_produk":response.id,
+                                            "id_produk":data.id,
                                         },
                                         success: function(responsex){
-                                            uploadFiles(responsex.id,i,false);
+                                            var datax = JSON.parse(responsex);
+                                            uploadFiles(datax.id,i,false);
                                             i++;
                                         }
                                     });

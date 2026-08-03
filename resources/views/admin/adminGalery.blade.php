@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Halaman Admin</title>
     <!-- Bootstrap CSS -->
-    <link rel="shortcut icon" type="image/icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/1200px-Kab_Bandung_Barat.svg.png"/>
+    <link rel="shortcut icon" type="image/icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/3840px-Kab_Bandung_Barat.svg.png"/>
     
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -135,11 +135,12 @@
                 url: "/api/galeri/",
                 method: "GET", // First change type to method here
                 success: function(response) {
-                    response.forEach(data => {
+                    var data = JSON.parse(response);
+                    data.forEach(data => {
                         var img = null;
                         var link = null;
                         var youtube = null
-                        if (data.image==null) {
+                        if (data.image=="") {
                             img = "-";
                             link = "<td><p>-</p></td>";
                             youtube = "<td><a href=\""+data.youTube+"\">Youtube Link</a></td>";
@@ -332,12 +333,13 @@
                                     "caption":$("#caption").val(),
                                 },
                                 success: function(response) {
+                                    var data = JSON.parse(response);
                                     var file = $('#fileUpload').prop('files')[0];
                                     var images = new FormData();
                                     images.append('image', file);
                                     
                                     $.ajax({
-                                        url: "/api/galeri/"+response.id,
+                                        url: "/api/galeri/"+data.id,
                                         method: "POST",
                                         processData: false,
                                         contentType: false,

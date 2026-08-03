@@ -6,7 +6,7 @@
     <title>Desa Kertawangi</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="shortcut icon" type="image/icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/1200px-Kab_Bandung_Barat.svg.png"/>
+    <link rel="shortcut icon" type="image/icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/3840px-Kab_Bandung_Barat.svg.png"/>
     <style>
         #more {display: none;}
         @media (max-width: 426px) {
@@ -140,7 +140,7 @@
     </style>
     <script>
         async function fetchRSS() {
-            const response = await fetch('https://nasional.kompas.com/read/2024/08/22/17383281/revisi-uu-pilkada-batal-disahkan-dpr-tetap-pakai-putusan-mk'); // Ganti dengan URL RSS Feed
+            const response = await fetch('http://127.0.0.1:8000/'); // Ganti dengan URL RSS Feed
             const text = await response.text();
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(text, "text/xml");
@@ -249,7 +249,7 @@
             <h4 style="color: #50A309;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">Apa Visi Desa Kertawangi?</h4>
             {{-- <span>Apa visi Desa Kertawangi?</span> --}}
             <p id="visi"></p>
-            <h4 style="color: #50A309;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">>Berikut adalah Misi Dari Desa Kertawangi :</h4>
+            <h4 style="color: #50A309;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">Berikut adalah Misi Dari Desa Kertawangi :</h4>
             {{-- <span><b>Berikut adalah Misi Dari Desa Kertawangi :</b></span> --}}
             <div id="misiList">
 
@@ -554,12 +554,12 @@
             return `${formattedNumber}`;
         }
         function isValidPhoneNumber(phoneNumber) {
-            phoneNumber = phoneNumber.trim();
+            phoneNumber = String(phoneNumber).trim();
             const phoneRegex = /^(?:\+62|0)\d{8,12}$/;
             return phoneRegex.test(phoneNumber);
         }
         function convertPhoneNumber(phoneNumber) {
-            phoneNumber = phoneNumber.trim();
+            phoneNumber = String(phoneNumber).trim();
             if (phoneNumber.startsWith('0')) {
                 return '+62' + phoneNumber.substring(1);
             } else {
@@ -571,7 +571,8 @@
                 url: "/api/atraksi/",
                 method: "GET", // First change type to method here
                 success: function(response) {
-                    response.forEach((data,index) => {
+                    var data = JSON.parse(response);
+                    data.forEach((data,index) => {
                         medsos = null;
                         maps = null;
                         
@@ -649,8 +650,9 @@
                 url: "/api/galeri/",
                 method: "GET", // First change type to method here
                 success: function(response) {
+                    var data = JSON.parse(response);
                     var num = 0;
-                    response.forEach(data => {
+                    data.forEach(data => {
                         if (num<4) {
                             if (data.youTube != null) {
                                 $('#galeri').append(
@@ -716,11 +718,12 @@
                 url: "/api/produk/",
                 method: "GET", // First change type to method here
                 success: function(response) {
+                    var data = JSON.parse(response);
                     var loop = 0;
-                    response.forEach((data,index) => {
+                    data.forEach((data,index) => {
                         number = null;
                         whastapp = null;
-                        if (loop <3) {
+                        if (loop < 3) {
                             if (data.telp !=="-") {
                                 whastapp = '<a href="https://wa.me/'+convertPhoneNumber(data.telp)+'" class="btn btn-success"><i class="fab fa-whatsapp"></i> Whatsapp</a>';
                             }else{
@@ -797,34 +800,37 @@
                 url: "/api/geografis/",
                 method: "GET", // First change type to method here
                 success: function(response) {
-                    $('#kode-desa').text(response.kode_desa);
-                    $('#tahun-pembentukan').text(response.tahun_pembentukan);
-                    $('#dasar-hukum').text(response.dasar_hukum);
-                    $('#tipologi').text(response.tipologi);
-                    $('#klasifikasi').text(response.klasifikasi);
-                    $('#kategori').text(response.kategori);
-                    $('#luas-wilayah').text(response.luas_wilayah);
-                    $('#batas-utara').text(response.batas_utara);
-                    $('#batas-selatan').text(response.batas_selatan);
-                    $('#batas-timur').text(response.batas_timur);
-                    $('#batas-barat').text(response.batas_barat);
+                    var data = JSON.parse(response);
+                    $('#kode-desa').text(data.kode_desa);
+                    $('#tahun-pembentukan').text(data.tahun_pembentukan);
+                    $('#dasar-hukum').text(data.dasar_hukum);
+                    $('#tipologi').text(data.tipologi);
+                    $('#klasifikasi').text(data.klasifikasi);
+                    $('#kategori').text(data.kategori);
+                    $('#luas-wilayah').text(data.luas_wilayah);
+                    $('#batas-utara').text(data.batas_utara);
+                    $('#batas-selatan').text(data.batas_selatan);
+                    $('#batas-timur').text(data.batas_timur);
+                    $('#batas-barat').text(data.batas_barat);
                 }
             });
             $.ajax({
                 url: "/api/anggaran/",
                 method: "GET", // First change type to method here
                 success: function(response) {
-                    $('#pendapatan').text(formatRupiah(response.pendapatan));
-                    $('#pengeluaran').text(formatRupiah(response.pengeluaran));
-                    $('#belanja').text(formatRupiah(response.belanja));
-                    $('#penerimaan').text(formatRupiah(response.penerimaan));
+                    var data = JSON.parse(response);
+                    $('#pendapatan').text(formatRupiah(data.pendapatan));
+                    $('#pengeluaran').text(formatRupiah(data.pengeluaran));
+                    $('#belanja').text(formatRupiah(data.belanja));
+                    $('#penerimaan').text(formatRupiah(data.penerimaan));
                 }
             });
             $.ajax({
                 url: "/api/banner/",
                 method: "GET", // First change type to method here
                 success: function(response) {
-                    response.forEach((data,index) => {
+                    var data = JSON.parse(response);
+                    data.forEach((data,index) => {
                         if (index == 0) {
                             $('#banner').append(
                                 '<div class="carousel-item active">' +
@@ -849,13 +855,14 @@
                 url: "/api/dashboard/",
                 method: "GET", // First change type to method here
                 success: function(response) {
-                    $('#kades_image').attr('src', `{{asset('storage/images/kades/${response.kades_image}')}}`);
-                    $("#about").text(response.about);
-                    $("#visi").text(response.visi);
-                    $("#geografis").text(response.geografis);
-                    $("#demografis").text(response.demografis);
+                    var data = JSON.parse(response);
+                    $('#kades_image').attr('src', `{{asset('storage/images/kades/${data.kades_image}')}}`);
+                    $("#about").text(data.about);
+                    $("#visi").text(data.visi);
+                    $("#geografis").text(data.geografis);
+                    $("#demografis").text(data.demografis);
                     
-                    var misi = response.misi;
+                    var misi = data.misi;
                     const points = misi.split('. ').filter(point => point.trim() !== '');
                     const htmlList = points.map(point => `<li>${point.trim()}</li>`).join('\n');
 

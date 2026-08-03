@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Halaman Admin</title>
     <!-- Bootstrap CSS -->
-    <link rel="shortcut icon" type="image/icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/1200px-Kab_Bandung_Barat.svg.png"/>
+    <link rel="shortcut icon" type="image/icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/3840px-Kab_Bandung_Barat.svg.png"/>
     
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -186,7 +186,8 @@
                     url: "/api/atraksi",
                     method: 'GET',
                     success: function(products) {
-                        products.forEach(product => {
+                        var data = JSON.parse(products);
+                        data.forEach(product => {
                             var link = `<a href="${product.medsos}" target="_blank">Instagram</a>`;
                             var maps = `<a href="${product.gmaps}" target="_blank">Maps</a>`;
                             if (product.medsos == "-") {
@@ -238,6 +239,7 @@
                             url: `${'/api/atraksi'}/${productId}`,
                             method: 'DELETE',
                             success: function(response) {
+                                var data = JSON.parse(response);
                                 Swal.fire({
                                     title: 'Delete Success',
                                     text: '',
@@ -257,14 +259,15 @@
                     url: `${'/api/atraksi'}/${productId}`,
                     method: 'GET',
                     success: function(product) {
-                        $('#editAtraksiName').val(product.nama);
-                        $('#editAtraksiInstagram').val(product.medsos);
-                        $('#editAtraksiMaps').val(product.gmaps);
+                        var data = JSON.parse(data);
+                        $('#editAtraksiName').val(data.nama);
+                        $('#editAtraksiInstagram').val(data.medsos);
+                        $('#editAtraksiMaps').val(data.gmaps);
                         $('#editAtraksiId').val(productId);
 
                         const imageContainer = $('#currentImages');
                         imageContainer.empty();
-                        product.data_image.forEach(img => {
+                        data.data_image.forEach(img => {
                             const imgDiv = $(`
                                 <div class="position-relative me-2 mb-2">
                                     <img style="height:60px" src="{{asset('storage/images/atraksi/${img.atraksi_img}')}}" alt="Gambar ${img.atraksi_img}" class="img-thumbnail">
@@ -373,18 +376,19 @@
                                 },
                                 success: function(response) {
                                     ///
+                                    var data = JSON.parse(response);
                                     var i = 0;
-                                    console.log(response);
                                     
                                     formData.forEach(function(value, key) {
                                         $.ajax({
                                             url: `${'/api/atraksiImg'}/`,
                                             method: 'POST',
                                             data: {
-                                                "id_atraksi":response.id,
+                                                "id_atraksi":data.id,
                                             },
                                             success: function(responsex){
-                                                uploadFiles(responsex.id,i,true);
+                                                var datax = JSON.parse(responsex);
+                                                uploadFiles(datax.id,i,true);
                                                 i++;
                                             }
                                         });
@@ -440,16 +444,18 @@
                     },
                     success: function(response) {
                         ///
+                        var data = JSON.parse(response);
                         var i = 0;
                         formData.forEach(function(value, key) {
                             $.ajax({
                                 url: `${'/api/atraksiImg'}/`,
                                 method: 'POST',
                                 data: {
-                                    "id_atraksi":response.id,
+                                    "id_atraksi":data.id,
                                 },
                                 success: function(responsex){
-                                    uploadFiles(responsex.id,i,false);
+                                    var datax = JSON.parse(responsex);
+                                    uploadFiles(datax.id,i,false);
                                     i++;
                                 }
                             });

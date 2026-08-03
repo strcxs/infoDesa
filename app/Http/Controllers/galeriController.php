@@ -42,16 +42,18 @@ class galeriController extends Controller
         $key = collect($request->all())->keys();
         if ($request->hasFile('image')) {
             $validator = Validator::make($request->all(),[
-                'image'     => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'image'     => 'image|mimes:jpeg,png,jpg,gif,svg,heic|max:2048',
             ]);
             if ($validator->fails()){
                 return response()->json($validator->errors(),442);
             }
             $data = $request->file('image');
             $data->storeAs('public/images/galeri/', $data->hashName());
-    
             //delete old image
-            Storage::delete('public/images/galeri/'.galeri::find($id)->image);
+            if (galeri::find($id)) {
+                Storage::delete('public/images/galeri/'.galeri::find($id)->image);
+            }
+            // Storage::delete('public/images/galeri/'.galeri::find($id)->image);
             
             galeri::find($id)->update([
                 'image'=> $data->hashName(),

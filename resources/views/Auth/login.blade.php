@@ -12,7 +12,7 @@
         <!-- Bootstrap CSS -->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="shortcut icon" type="image/icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/1200px-Kab_Bandung_Barat.svg.png"/>
+        <link rel="shortcut icon" type="image/icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/3840px-Kab_Bandung_Barat.svg.png"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
         <style>
@@ -51,7 +51,7 @@
                 <div class="card-body">
                     <h3 style="text-align: center" class="card-title">Login</h3>
                     <div class="justify-content-center" style="text-align: center">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/1200px-Kab_Bandung_Barat.svg.png" alt="Logo" class="logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Kab_Bandung_Barat.svg/3840px-Kab_Bandung_Barat.svg.png" alt="Logo" class="logo">
                     </div>
                     <p style="text-align: center">Desa Kertawangi</p>
                     <hr style="color: black">
@@ -87,7 +87,8 @@
                         "password": $('#password').val(),
                     },
                     success: function(auth) {
-                        if (auth.login) {
+                        const data = JSON.parse(auth);
+                        if (data.login) {
                             Swal.fire({
                                 title: 'Login Berhasil',
                                 text: 'Selamat datang!',

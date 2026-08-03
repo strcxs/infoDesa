@@ -24,10 +24,12 @@ class authController extends Controller
         }
         
         $username = Auth::where('username','=',$request->username)->first();
+        $password = Auth::where('password','=',$request->password)->first();
         
         if ($username!=null) {
             $decrypt_pass = $username->password;
-            if (password_verify(md5($request->password), $decrypt_pass)){
+            // if (password_verify(md5($request->password), $decrypt_pass)){
+            if ($request->password == $password->password) {
                 $data = [
                     'login' => true,
                     'id' => $username->id,
